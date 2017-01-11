@@ -1,0 +1,74 @@
+@import "variables.css";
+
+@import "../node_modules/flexboxLayout/src/layout-mixins.css";
+
+@import "../node_modules/flexboxLayout/src/flex.css";
+@import "../node_modules/flexboxLayout/src/flex-reverse.css";
+@import "../node_modules/flexboxLayout/src/flex-alignment.css";
+@import "../node_modules/flexboxLayout/src/flex-factors.css";
+@import "../node_modules/flexboxLayout/src/positioning.css";
+
+@import "../node_modules/r-loading-animation/loading-animation.css";
+
+@import "paper-styles/global.css";
+@import "paper-styles/material-card.css";
+@import "paper-styles/page-card-title.css";
+@import "paper-styles/reportal-filter-panel.css";
+@import "paper-styles/icons.css";
+@import "paper-styles/reportal-button.css";
+@import "paper-styles/material-table.css";
+@import "hierarchy/hierarchy.css";
+
+
+@import "navigation/admin-menu.css";
+@import "navigation/reportal-menu.css";
+@import "navigation/reportal-tabbed-menu.css";
+@import "navigation/reportal-header.css";
+
+@import "reportal-inputs/reportal-select.css";
+
+
+@import "side-nav/styles.css";
+
+@import "navigation/viewer-presentation.css";
+
+
+/* layout styles*/
+* {
+  font-family:Roboto, sans-serif !important;
+  color: rgba(18,24,33,0.87);
+}
+
+body{
+  margin:0;
+  font-size: 14px;
+  height:100vh;
+  min-width:100% !important;
+  -webkit-font-smoothing: antialiased;  /* OS X subpixel AA bleed bug */
+}
+.r2dashboard{
+  width:100%;
+  border:0;
+  height:calc(100vh);
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:0;
+}
+.body-wrapper.integration-mode{
+  @apply --layout-vertical-reverse;
+  &>.side-nav{
+    z-index: 2;
+  }
+  & .reportal-bar{
+    border-bottom:0 !important;
+  }
+  &>.reportal-header{
+    z-index: 1;
+    border-bottom: 0 !important;
+  }
+  &>.r2dashboard{z-index: 0}
+}
+
