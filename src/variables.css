@@ -1,0 +1,9 @@
+:root{
+  --ImageGridTile:{
+    width:232px;
+  };
+  --ProportionalImage-placeholder: {
+    background-color: #f0f2f5;
+    background-size: auto !important;
+  };
+}

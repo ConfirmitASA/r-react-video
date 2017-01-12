@@ -1,0 +1,52 @@
+:root{
+  --ProportionalImage-placeholder: {
+    background-color: #f0f2f5;
+    background-size: auto !important;
+  };
+}
+.ImageGridTile{
+  box-sizing: border-box;
+  padding: 4px;
+  font-family: Roboto, sans-serif;
+  width:232px;
+  @apply --ImageGridTile;
+  &--cover,
+  &--title,
+  &--action-icon{
+    cursor:pointer;
+  }
+  &--action-icon {
+    min-width:48px;
+    padding: 8px;
+  }
+  &--content{
+    display: flex;
+    flex-direction: row;
+    padding: 8px 0;
+  }
+  &--meta{
+    display: flex;
+    flex:1;
+    flex-direction: column;
+  }
+  &--title{
+    font-size: 13px;
+    line-height:normal;
+    font-weight: 600;
+  }
+  &--description{
+    font-size: 10px;
+    line-height:normal;
+  }
+  & .ellipsis{
+    max-height: 2.6em;
+    display: block;
+    line-height: 1.3em;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+}
