@@ -65,6 +65,8 @@
   },
   "dependencies": {
     "ProportionalImage": "github:confirmitasa/ProportionalImage",
+    "r-hitlist-datasource": "github:confirmitasa/r-hitlist-datasource",
+    "r-reportal-base": "github:confirmitasa/r-reportal-base",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }

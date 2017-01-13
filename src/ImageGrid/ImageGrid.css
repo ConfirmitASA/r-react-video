@@ -1,5 +1,6 @@
-.image-list-grid{
+.ImageGrid{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  flex:1
 }

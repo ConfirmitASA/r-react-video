@@ -8,6 +8,7 @@ class ImageGridTile extends React.Component{
    * @param {Object} props
    * @param {String} props.image - image url
    * @param {String} props.placeholder - a placeholder image
+   * @param {String} props.placeholderSizing - Sets a sizing option for the placeholder. By default it's the same as for the `src` image, but set to `initial` or other valid `background-size` value to override.
    * @param {String} props.mediatype - a default media icon instead of the placeholder image: one of `image`,`audio`,`video`
    * @param {String} [props.iconColor="#cccccc"] - default placeholder media icon color
    * @param {String} [props.iconSize=48] - default placeholder media icon size
@@ -37,7 +38,7 @@ class ImageGridTile extends React.Component{
             fade="true"
             alt={this.props.title}
             placeholder={this._computeTileType()}
-            placeholderSizing="initial"
+            placeholderSizing={this.props.placeholderSizing}
             src={this.props.image}
           />
         </div>
