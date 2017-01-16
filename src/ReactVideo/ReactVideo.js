@@ -31,7 +31,7 @@ class ReactVideo extends React.Component {
         <div className="GridContainer">
           <ImageGrid
             aspect="16:9"
-            actionIcon={this.constructor.actionIcon()}
+            //actionIcon={this.constructor.actionIcon()}
             onSelect={this.onSelect}
             items={this.state.items}
           />
@@ -80,12 +80,18 @@ class ReactVideo extends React.Component {
           }
           d.image = d.image.replace(/_thumb/gi, '');
         }
+        // calculate mediatype or a placeholder icon
+        ['video','audio','image'].forEach(type=>{
+          if(typeof type){d.mediatype = type}
+        });
       }
-      // some more fields
+      // get id for keys
       d.id = item.responseid? item.responseid : index;
-      ['video','audio','image'].forEach(type=>{
-        if(typeof type){d.mediatype = type}
-      });
+      // calculate link passed as `slink` property in data
+      if(item.slink){
+        let l=item.slink;
+        d.link = l.substring(l.lastIndexOf("href='")+6, l.lastIndexOf("' target"));
+      }
       return d;
     });
     console.log(newData);
@@ -105,47 +111,14 @@ class ReactVideo extends React.Component {
         break;
       case 'tags': return data.indexOf(',')>-1? data.split(',') : data.indexOf('-')>-1 && data.trim().length==1? undefined : data.trim();
         break;
-      case 'link':
-        let l = document.createElement('span');
-        l.innerHTML = data;
-        return l.firstElementChild? l.firstElementChild.getAttribute('href') : undefined;
-        break;
-      default: console.warn(`"${type}" is not a recognized field for your config, choose from 'description','image','title','tags','link'`); break;
     }
   }
 
-  onSelect(...args){
-    console.log(args);
+  onSelect(data){
+    //TODO: launch iframe page instead
+    console.log(data);
+    window.location = data.link;
   }
-
-  /*componentDidMount(){
-   this.setState({
-   items:[
-   {
-   uid:1,
-   image:"http://kenteriksen.com/wp-content/uploads/Kyle-Link-27.5-Plus-02.jpg",
-   mediatype:'image',
-   title:'Hello',
-   description:'World',
-   },
-   {
-   uid:2,
-   image:"https://i.ytimg.com/vi/xYwZ5Egjlc0/maxresdefault.jpg",
-   mediatype:'video',
-   title:'Hello1',
-   description:'World1'
-   },
-   {
-   uid:3,
-   image:"",
-   mediatype:'audio',
-   title:'Hello2',
-   description:'World2'
-   },
-   ]
-   });
-
-   }*/
 
   static actionIcon(){
     return  <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
