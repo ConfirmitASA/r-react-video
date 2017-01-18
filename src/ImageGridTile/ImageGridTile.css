@@ -29,12 +29,12 @@
     flex-direction: column;
   }
   &--title{
-    font-size: 13px;
+    font-size: 15px;
     line-height:normal;
     font-weight: 600;
   }
   &--description{
-    font-size: 10px;
+    font-size: 12px;
     line-height:normal;
   }
   & .ellipsis{
