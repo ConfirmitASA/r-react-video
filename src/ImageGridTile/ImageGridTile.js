@@ -34,8 +34,8 @@ class ImageGridTile extends React.Component{
             width="100%"
             aspect={this.props.aspect}
             sizing="cover"
-            preload="true"
-            fade="true"
+            preload={true}
+            fade={true}
             alt={this.props.title}
             placeholder={this._computeTileType()}
             placeholderSizing={this.props.placeholderSizing}

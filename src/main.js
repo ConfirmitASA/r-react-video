@@ -19,7 +19,7 @@ const launchVideoHitlist = (configName,thumbsPlaceholder=true) => {
     throw new TypeError(`config name must be a string, not a ${typeof configName}`)
   }
   window.addEventListener("DOMContentLoaded", ()=>{
-    ReactDOM.render(<ReactVideo config={configName} thumbsPlaceholder={thumbsPlaceholder} />,document.getElementById('root'))
+    ReactDOM.render(<ReactVideo config={configName} thumbsPlaceholder={thumbsPlaceholder} verbose="\{true}"/>,document.getElementById('root'))
   });
 };
 

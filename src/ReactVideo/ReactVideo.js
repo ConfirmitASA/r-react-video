@@ -69,41 +69,55 @@ class ReactVideo extends React.Component {
   }
 
   processData(data){
-    let config = this.config;
+    let c = this.config,
+        config = {
+          id:c.id,
+          title:c.title,
+          description:c.description,
+          image:c.image,
+          audio:c.audio,
+          video:c.video,
+          tags:c.tags,
+        };
     let newData = data.map((item,index)=>{
-      let d ={};
-      for(let type in config){
-        d[type]=this.constructor.prepareData(item[config[type].key],type);
-        if(type == 'image'){
+      let parsedData ={};
+      for(let key in config){
+        parsedData[key]=this.constructor.prepareData(item[config[key]],key);
+        // if image - we might want to use a placeholder as the thumb, and load the full image in background
+        if(key == 'image'){
           if(this.props.thumbsPlaceholder){
-            d['placeholder'] = d.image;
+            parsedData['placeholder'] = parsedData.image;
           }
-          d.image = d.image.replace(/_thumb/gi, '');
+          parsedData.image = parsedData.image.replace(/_thumb/gi, '');
         }
         // calculate mediatype or a placeholder icon
-        ['video','audio','image'].forEach(type=>{
-          if(typeof type){d.mediatype = type}
-        });
+        if(['video','audio','image'].indexOf(key)>-1 && config[key]){
+            parsedData.mediatype = key
+        }
       }
+
       // get id for keys
-      d.id = item.responseid? item.responseid : index;
+      parsedData.id = item.responseid? item.responseid : index;
       // calculate link passed as `slink` property in data
       if(item.slink){
         let l=item.slink;
-        d.link = l.substring(l.lastIndexOf("href='")+6, l.lastIndexOf("' target"));
+        parsedData.link = (/href='(.+?)'/gi).exec(l)[1];
       }
-      return d;
+      return parsedData;
     });
-    console.log(newData);
+
+    //update state with the new set of data
     this.setState({items:newData});
+    if(this.props.verbose){
+      console.log("data: ",newData);
+    }
   }
 
   static prepareData(data,type){
     switch(type){
       case 'image':
-        let i = document.createElement('span');
-        i.innerHTML = data;
-        return i.firstElementChild? i.firstElementChild.getAttribute('src') : undefined;
+        let result = (/src='(.+?)'/gi).exec(data);
+        return result && result !=null && result[1]? result[1] : undefined;
         break;
       case 'description':
       case 'title':
@@ -116,7 +130,9 @@ class ReactVideo extends React.Component {
 
   onSelect(data){
     //TODO: launch iframe page instead
-    console.log(data);
+    if(this.props.verbose){
+      console.log("clickde item data:",data);
+    }
     window.location = data.link;
   }
 
