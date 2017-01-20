@@ -4,6 +4,7 @@
 import React from 'react';
 import ImageGrid from '../ImageGrid/ImageGrid';
 import HitlistDS from "r-hitlist-datasource";
+import SingleView from "../SingleView/SingleView";
 
 class ReactVideo extends React.Component {
   /**
@@ -19,22 +20,36 @@ class ReactVideo extends React.Component {
     console.log(this.DS);
     this.setupDataListener();
     this.state = {
-      items:[]
-    }
+      items:[],
+      singleView:{link:''},
+      singleViewVisible:false
+    };
+    this.backCallback=this.backCallback.bind(this);
   }
 
   render() {
     const items=this.state.items;
     let render = null;
     if(items.length!=0){
+      console.log(this.state.singleView);
       render = (
         <div className="GridContainer">
-          <ImageGrid
-            aspect="16:9"
-            //actionIcon={this.constructor.actionIcon()}
-            onSelect={this.onSelect}
-            items={this.state.items}
-          />
+          {
+            <SingleView
+              link={this.state.singleView.link}
+              visible={this.state.singleViewVisible}
+              initialLoad={true}
+              backCallback={this.backCallback}
+              headerText={`Edit video ${this.state.singleView.title}`} />
+          }
+          <div style={{display: !this.state.singleViewVisible? 'block' : 'none'}}>
+            <ImageGrid
+              aspect="16:9"
+              //actionIcon={this.constructor.actionIcon()}
+              onSelect={this.onSelect}
+              items={this.state.items}
+            />
+          </div>
         </div>
       )
     } else {
@@ -45,6 +60,11 @@ class ReactVideo extends React.Component {
       } else {throw new Error('HitlistDatasource is not available')}
     }
     return render
+  }
+
+  backCallback(){
+    this.setState({singleViewVisible:false});
+    this.DS.initialDataLoad().then(response=>this.processData(response));
   }
 
   setupDataListener(){
@@ -70,15 +90,17 @@ class ReactVideo extends React.Component {
 
   processData(data){
     let c = this.config,
-        config = {
-          id:c.id,
-          title:c.title,
-          description:c.description,
-          image:c.image,
-          audio:c.audio,
-          video:c.video,
-          tags:c.tags,
-        };
+      config={};
+    ['id','title','description','image','audio','video','tags'].forEach(item=>config[item]=[this.config[item]])
+    config = {
+      id:c.id,
+      title:c.title,
+      description:c.description,
+      image:c.image,
+      audio:c.audio,
+      video:c.video,
+      tags:c.tags,
+    };
     let newData = data.map((item,index)=>{
       let parsedData ={};
       for(let key in config){
@@ -92,7 +114,7 @@ class ReactVideo extends React.Component {
         }
         // calculate mediatype or a placeholder icon
         if(['video','audio','image'].indexOf(key)>-1 && config[key]){
-            parsedData.mediatype = key
+          parsedData.mediatype = key
         }
       }
 
@@ -131,9 +153,12 @@ class ReactVideo extends React.Component {
   onSelect(data){
     //TODO: launch iframe page instead
     if(this.props.verbose){
-      console.log("clickde item data:",data);
+      console.log("clicked item data:",data);
     }
-    window.location = data.link;
+    this.setState({
+      singleView:data,
+      singleViewVisible:true
+    });
   }
 
   static actionIcon(){
