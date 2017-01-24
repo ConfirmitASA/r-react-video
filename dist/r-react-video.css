@@ -1,0 +1,128 @@
+.ProportionalImage {
+  display: inline-block;
+  overflow: hidden;
+  position: relative
+}
+.ProportionalImage.hidden,
+  .ProportionalImage .hidden {
+  display: none
+}
+.ProportionalImage>.sizedImgDiv {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none
+}
+.ProportionalImage>img {
+  display: block;
+  width: auto;
+  height: auto
+}
+.ProportionalImage>.imagePlaceholder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #f0f2f5;
+  opacity: 1;
+  background-color: #f0f2f5
+}
+.ProportionalImage>.imagePlaceholder.faded-out {
+  -webkit-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+  opacity: 0
+}
+.ImageGrid{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+      -ms-flex:1;
+          flex:1
+}
+.ImageGridTile{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 4px;
+  font-family: Roboto, sans-serif;
+  width:232px;
+  @apply --ImageGridTile
+
+}
+.ImageGridTile--cover,
+  .ImageGridTile--title,
+  .ImageGridTile--action-icon{
+  cursor: pointer
+
+}
+.ImageGridTile--action-icon{
+  min-width: 48px;
+  padding: 8px
+
+}
+.ImageGridTile--content{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  padding: 8px 0
+
+}
+.ImageGridTile--meta{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column
+
+}
+.ImageGridTile--title{
+  font-size: 15px;
+  line-height: normal;
+  font-weight: 600
+
+}
+.ImageGridTile--description{
+  font-size: 12px;
+  line-height: normal
+
+}
+.ImageGridTile .ellipsis{
+  max-height: 2.6em;
+  display: block;
+  line-height: 1.3em;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word
+
+}
