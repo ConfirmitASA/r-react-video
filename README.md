@@ -1,7 +1,11 @@
-# r2integration
-This is a template script/style project for Reports using Material Design with R2 integration possibilities. Make sure you read [API docs](http://confirmitasa.github.io/r2integration) to understand what javascript is included in the package
+# r-react-video
+This is a video wall hitlist project.
 
-### Markup
-Take a look at the `_snippets` folder contents for a starting point in your markup.
-This project has included [`flexboxLayout`](https://github.com/ConfirmitASA/flexboxLayout) as dependency, so make sure you check [Documentation](https://confirmitasa.github.io/flexboxLayout/) on 
-how to use those helper classes and mixins in your project to build layouts quickly 
+It requires React and ReactDOM be included on the page where you call it, make sure you embed them in Report Master properties in external js like this: `//unpkg.com/react@15/dist/react.min.js;//unpkg.com/react-dom@15.4.2/dist/react-dom.min.js`
+
+### Setup
+
+```javascript
+Reportal.launchVideoHitlist('pConfig', true);
+```
+Where `pConfig` is the name of the config variable sent from the backend

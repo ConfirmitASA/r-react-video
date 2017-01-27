@@ -31,7 +31,12 @@
   &--title{
     font-size: 15px;
     line-height:normal;
-    font-weight: 600;
+    font-weight: 500;
+    transition: color 0.25s ease-in-out ;
+
+  }
+  &:hover &--title{
+      color: var(--accent-color, #03a9f4);
   }
   &--description{
     font-size: 12px;
@@ -47,5 +52,4 @@
     white-space: normal;
     word-wrap: break-word;
   }
-
 }

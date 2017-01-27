@@ -27,7 +27,6 @@
     "babel-istanbul": "^0.6.0",
     "babel-istanbul-loader": "^0.0.1",
     "babel-loader": "^6.2.4",
-    "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-istanbul": "^2.0.1",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.16.0",
@@ -64,9 +63,12 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "MDIcon": "github:jahglow/MDIcon",
     "ProportionalImage": "github:confirmitasa/ProportionalImage",
     "r-hitlist-datasource": "github:confirmitasa/r-hitlist-datasource",
-    "r-reportal-base": "github:confirmitasa/r-reportal-base",
+    "r-reportal-base": "github:confirmitasa/r-reportal-base"
+  },
+  "peerDependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }

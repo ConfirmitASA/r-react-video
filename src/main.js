@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import mainCSS from './main.css';
 import ReactVideo from './ReactVideo/ReactVideo';
 import ReportalBase from 'r-reportal-base';

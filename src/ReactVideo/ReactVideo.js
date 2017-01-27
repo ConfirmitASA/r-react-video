@@ -17,7 +17,7 @@ class ReactVideo extends React.Component {
     super(props);
     this.onSelect=this.onSelect.bind(this);
     this.DS = new HitlistDS();
-    console.log(this.DS);
+    this.props.verbose && console.log(this.DS);
     this.setupDataListener();
     this.state = {
       items:[],
@@ -31,7 +31,6 @@ class ReactVideo extends React.Component {
     const items=this.state.items;
     let render = null;
     if(items.length!=0){
-      console.log(this.state.singleView);
       render = (
         <div className="GridContainer">
           {
@@ -40,7 +39,7 @@ class ReactVideo extends React.Component {
               visible={this.state.singleViewVisible}
               initialLoad={true}
               backCallback={this.backCallback}
-              headerText={`Edit video ${this.state.singleView.title}`} />
+              headerText={`Edit video "${this.state.singleView.title}"`} />
           }
           <div style={{display: !this.state.singleViewVisible? 'block' : 'none'}}>
             <ImageGrid

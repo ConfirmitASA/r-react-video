@@ -1,4 +1,6 @@
-import React from "react"
+import React from "react";
+import MDIcon from 'MDIcon';
+import {ic_arrow_back} from '../icons';
 
 export default class SingleView extends React.Component{
   /**
@@ -24,13 +26,6 @@ export default class SingleView extends React.Component{
     this.onLoad=this.onLoad.bind(this);
     this.receiveMessage = this.receiveMessage.bind(this);
     window.addEventListener("message", this.receiveMessage, false);
-  }
-
-  get targetOrigin(){
-    return this._targetOrigin
-  }
-  set targetOrigin(val){
-    this._targetOrigin = val;
   }
 
   componentWillReceiveProps(nextProps){
@@ -63,7 +58,6 @@ export default class SingleView extends React.Component{
   handshake(el, targetOrigin){
     //TODO:organize postMessage, because it's cross-origin
     if(targetOrigin!=null){
-      console.log(el,el.contentWindow);
       let iframe = el.contentWindow;
       this.targetOrigin = targetOrigin;
       iframe.postMessage('connect',targetOrigin);
@@ -72,10 +66,8 @@ export default class SingleView extends React.Component{
 
   receiveMessage(event){
     let origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
-    console.log(event);
     if (origin !== this.targetOrigin)return;
     if(event.data && event.data.action && this[event.data.action]){
-      console.log(this[event.data.action],event.data)
       this[event.data.action](event.data);
     } else {
       console.warn('action not found for ', event.data,event.data.action,this[event.data.action])
@@ -87,11 +79,13 @@ export default class SingleView extends React.Component{
   }
 
   render(){
-    console.log(this.state);
     return (
       <div className="SingleView" style={{display:this.state.visible>0?'block':'none'}}>
         <div className="SingleView--header">
-          {this.backButton(this.props)}{this.props.headerText}
+          <span className="SingleView--back-button" title="Return to the list" onClick={this.props.backCallback}>
+            <MDIcon icon={ic_arrow_back} />
+          </span>
+          {this.props.headerText}
         </div>
         {this.iframe(this.state.link, this.state.visible?this.state.iframeVisible:this.state.visible, this.state.iframeHeight)}
       </div>
@@ -105,23 +99,9 @@ export default class SingleView extends React.Component{
       onLoad={this.onLoad}
       style={{
         display: visible? 'block' : 'none',
-        width:'100%',
-        height:height,
-        border:0,
-        background:'transparent'
+        height:height
       }} />;
   }
-
-  backButton (props){
-    return (
-      <span className="SingleView--back-button" title="Return to the list" onClick={props.backCallback}>
-        <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-        </svg>
-      </span>
-    )
-  }
-
 }
 
 SingleView.defaultProps = {

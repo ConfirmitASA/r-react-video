@@ -1,3 +1,4 @@
 @import "variables.css";
 @import "../node_modules/ProportionalImage/src/main.css";
 @import "ImageGrid/ImageGrid.css";
+@import "SingleView/SingleView.css";
