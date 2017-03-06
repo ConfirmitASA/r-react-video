@@ -17,6 +17,7 @@ class ReactVideo extends React.Component {
     super(props);
     this.onSelect=this.onSelect.bind(this);
     this.DS = new HitlistDS();
+    console.log(this.DS);
     this.props.verbose && console.log(this.DS);
     this.setupDataListener();
     this.state = {
@@ -28,25 +29,24 @@ class ReactVideo extends React.Component {
   }
 
   render() {
-    const items=this.state.items;
+    const {items,singleViewVisible,singleView}=this.state;
     let render = null;
     if(items.length!=0){
       render = (
-        <div className="GridContainer">
-          {
+        <div className={`GridContainer ${!singleViewVisible ? 'GridView':''}`}>
             <SingleView
-              link={this.state.singleView.link}
-              visible={this.state.singleViewVisible}
+              link={singleView.link}
+              visible={singleViewVisible}
               initialLoad={true}
               backCallback={this.backCallback}
-              headerText={`Edit video "${this.state.singleView.title}"`} />
-          }
-          <div style={{display: !this.state.singleViewVisible? 'block' : 'none'}}>
+              headerText={`Edit video "${singleView.title}"`} />
+          <div style={{display: !singleViewVisible? 'block' : 'none'}}>
             <ImageGrid
+
               aspect="16:9"
               //actionIcon={this.constructor.actionIcon()}
               onSelect={this.onSelect}
-              items={this.state.items}
+              items={items}
             />
           </div>
         </div>
@@ -66,6 +66,9 @@ class ReactVideo extends React.Component {
     this.DS.initialDataLoad().then(response=>this.processData(response));
   }
 
+  /**
+   * Launches listener for `Y.Global.reportcontroller:viewModeDataUpdate` event within YUI which is triggered every time the filter panel updates or on initial load
+   * */
   setupDataListener(){
     if(Y && Y.Global){
       Y.Global.on("reportcontroller:viewModeDataUpdate", filterInfo=>{

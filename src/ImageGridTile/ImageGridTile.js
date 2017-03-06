@@ -63,7 +63,6 @@ class ImageGridTile extends React.Component{
       return this.props.placeholder
     }
   }
-
   /**
    * Returns an icon with a correct fill color
    * @param {String} name - icon name (one of `image`, `video`, `audio`)
