@@ -5,11 +5,9 @@
 
 .GridContainer.GridView{
   margin: 0 auto;
-  padding-top: 24px;
-  justify-content: center;
 }
 .GridContainer{
-  position:relative;
+  position:absolute;
   top:0;
   right:0;
   bottom:0;

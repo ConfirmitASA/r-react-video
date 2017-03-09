@@ -2,6 +2,13 @@
   --SingleView-header-height:48px
 }
 .SingleView {
+  position:absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow:hidden;
+
   &--header {
     display:block;
     height: var(--SingleView-header-height);
@@ -30,5 +37,6 @@
     width:100%;
     border: 0;
     background: transparent;
+    height: calc(100% - var(--SingleView-header-height,48px));
   }
 }

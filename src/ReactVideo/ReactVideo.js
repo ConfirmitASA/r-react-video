@@ -17,12 +17,13 @@ class ReactVideo extends React.Component {
     super(props);
     this.onSelect=this.onSelect.bind(this);
     this.DS = new HitlistDS();
-    console.log(this.DS);
     this.props.verbose && console.log(this.DS);
     this.setupDataListener();
     this.state = {
-      items:[],
-      singleView:{link:''},
+      items:null,
+      singleView:{
+        link:''
+      },
       singleViewVisible:false
     };
     this.backCallback=this.backCallback.bind(this);
@@ -31,7 +32,7 @@ class ReactVideo extends React.Component {
   render() {
     const {items,singleViewVisible,singleView}=this.state;
     let render = null;
-    if(items.length!=0){
+    if(Array.isArray(items) && items.length!=0){
       render = (
         <div className={`GridContainer ${!singleViewVisible ? 'GridView':''}`}>
             <SingleView
@@ -40,11 +41,9 @@ class ReactVideo extends React.Component {
               initialLoad={true}
               backCallback={this.backCallback}
               headerText={`Edit video "${singleView.title}"`} />
-          <div style={{display: !singleViewVisible? 'block' : 'none'}}>
+          <div className="ImageGridContainer" style={{display: !singleViewVisible? 'block' : 'none'}}>
             <ImageGrid
-
               aspect="16:9"
-              //actionIcon={this.constructor.actionIcon()}
               onSelect={this.onSelect}
               items={items}
             />
@@ -54,12 +53,13 @@ class ReactVideo extends React.Component {
     } else {
       if(this.DS){
         render = (
-          <div className="GridContainer">{this.DS.i18n('loadingData')}</div>
+          <div className="GridContainer ImageGrid">{this.DS.i18n(Array.isArray(items) && items.length==0 ? 'REPORT_SINGLEVIEW_NOTHINGFOUND':'loadingData')}</div>
         )
       } else {throw new Error('HitlistDatasource is not available')}
     }
     return render
   }
+
 
   backCallback(){
     this.setState({singleViewVisible:false});
@@ -93,7 +93,7 @@ class ReactVideo extends React.Component {
   processData(data){
     let c = this.config,
       config={};
-    ['id','title','description','image','audio','video','tags'].forEach(item=>config[item]=[this.config[item]])
+    ['id','title','description','image','audio','video','tags'].forEach(item=>config[item]=[this.config[item]]);
     config = {
       id:c.id,
       title:c.title,
@@ -137,6 +137,9 @@ class ReactVideo extends React.Component {
     }
   }
 
+  /**
+  * massage data to fit the type we expect to receive in react view
+  * */
   static prepareData(data,type){
     switch(type){
       case 'image':
@@ -153,7 +156,6 @@ class ReactVideo extends React.Component {
   }
 
   onSelect(data){
-    //TODO: launch iframe page instead
     if(this.props.verbose){
       console.log("clicked item data:",data);
     }

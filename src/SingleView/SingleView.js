@@ -4,11 +4,11 @@ import {ic_arrow_back} from '../icons';
 
 export default class SingleView extends React.Component {
   /**
-   * Creates a single view which is a navigation header followed by an iframe that loads external content from a link
+   * Creates a single view which is a navigation header followed by an renderIframe that loads external content from a link
    * @param {Object} props
-   * @param {Boolean} [props.visible=false] - whether the iframe is visible on a page
-   * @param {Boolean} props.initialLoad - whether it's the first time the iframe loads (necessary for the survey, because an initial load is the first time the survey loads, and second load is when the survey is submitted)
-   * @param {String} props.link - the link to a page to load in an iframe
+   * @param {Boolean} [props.visible=false] - whether the renderIframe is visible on a page
+   * @param {Boolean} props.initialLoad - whether it's the first time the renderIframe loads (necessary for the survey, because an initial load is the first time the survey loads, and second load is when the survey is submitted)
+   * @param {String} props.link - the link to a page to load in an renderIframe
    * @param {String} [props.headerText] - the text to be displayed next to the back button in the nav header
    * @param {Function} props.backCallback - the callback executed when the user wants to navigate off the SingleView page (hitting back or submit)
    * @param {Boolean} [props.closeOnSubmit = false] - the callback executed when the user wants to navigate off the SingleView page (hitting back or submit)
@@ -45,7 +45,6 @@ export default class SingleView extends React.Component {
   }
 
   setupListener(e) {
-    //TODO: resize iframe to fit its contents
     this.handshake(this.iframeEl, this.getDomain(this.state.link))
   }
 
@@ -58,7 +57,7 @@ export default class SingleView extends React.Component {
           initialLoad  : false
         });
       }
-      this.handshake(e.target, this.getDomain(this.state.link));
+      //this.handshake(e.target, this.getDomain(this.state.link));
     }
   }
 
@@ -67,7 +66,6 @@ export default class SingleView extends React.Component {
   }
 
   handshake(el, targetOrigin) {
-    //TODO:organize postMessage, because it's cross-origin
     if (targetOrigin != null) {
       let iframe        = el.contentWindow;
       this.targetOrigin = targetOrigin;
@@ -85,13 +83,8 @@ export default class SingleView extends React.Component {
     }
   }
 
-  resizeIframe({height:iframeHeight}) {
-    console.log(iframeHeight);
-    this.setState({iframeHeight});
-  }
-
   render() {
-    let {link, visible,iframeVisible,iframeHeight} = this.state;
+    let {link, visible,iframeVisible} = this.state;
     return (
       <div className="SingleView" style={{display: this.state.visible ? 'block' : 'none'}}>
         <div className="SingleView--header">
@@ -100,28 +93,25 @@ export default class SingleView extends React.Component {
           </span>
           {this.props.headerText}
         </div>
-        {this.iframe(link, visible ? iframeVisible : visible, iframeHeight)}
+        {this.renderIframe(link, visible ? iframeVisible : visible)}
       </div>
     )
   }
 
   /**
-   * Renders an iframe element
-   * @param {String} link - url of the iframe
-   * @param {String} visible - visibility of the iframe
-   * @param {String} height - height of the iframe
+   * Renders an renderIframe element
+   * @param {String} link - url of the renderIframe
+   * @param {String} visible - visibility of the renderIframe
+   * @param {String} height - height of the renderIframe
    * */
-  iframe(link, visible, height) {
+  renderIframe(link, visible) {
     return <iframe
       ref={iframe => {
         this.iframeEl = iframe
       }}
       src={link}
       onLoad={this.onLoad}
-      style={{
-        display: visible ? 'block' : 'none',
-        height : height
-      }}/>;
+      style={{display: visible ? 'block' : 'none'}}/>;
   }
 }
 

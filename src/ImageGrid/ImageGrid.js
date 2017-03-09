@@ -10,31 +10,45 @@ import ImageGridTile from '../ImageGridTile/ImageGridTile';
  * @param {JSX} props.actionIcon - action icon JSX with a bound handler
  * @param {?String} props.placeholderSizing - Sets a sizing option for the placeholder. By default it's the same as for the `src` image, but set to `initial` or other valid `background-size` value to override.
  * @param {Function} props.onSelect - function that is executed when an item is clicked on
+ * @param {Number} props.dummyItems - function that is executed when an item is clicked on
  * */
 class ImageGrid extends React.Component {
   render() {
-    let items = this.props.items;
+    const {items,dummyItems,aspect,placeholderSizing,actionIcon,onSelect} = this.props;
     return (
       <div className="ImageGrid">
         {
           Array.isArray(items) && items.length>0 && items.map((item,index)=>(
             <ImageGridTile
               key={item.id.toString()}
-              aspect={this.props.aspect}
+              aspect={aspect}
               image={item.image}
               mediatype={item.mediatype}
               placeholder={item.placeholder}
-              placeholderSizing={this.props.placeholderSizing}
+              placeholderSizing={placeholderSizing}
               title={item.title}
               description={item.description}
-              actionIcon={this.props.actionIcon}
-              onSelect={e=>this.props.onSelect.call(this,item)}
+              actionIcon={actionIcon}
+              onSelect={()=>onSelect.call(this,item)}
             />
           ))
         }
+        {dummyItems && this.renderDummyItems(dummyItems)}
       </div>
     )
   }
+
+  renderDummyItems(count){
+    const dummyItems=[];
+      while(count--){
+        dummyItems.push(<div className="ImageGridTile"/>)
+      }
+      return dummyItems
+  }
+}
+
+ImageGrid.defaultProps={
+  dummyItems:12
 }
 
 export default ImageGrid;

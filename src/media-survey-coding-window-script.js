@@ -17,13 +17,15 @@ function receiveMessage(event)
     var body = document.body, html = document.documentElement;
     var iframeHeight = document.body.clientHeight;
 
+/*
     pm({
       action: 'resizeIframe',
       height: iframeHeight
     },event.source,event.origin)
+*/
   }}
 
 function pm(message,source,origin){
   source.postMessage(message,origin);
 }
-window.addEventListener("message", receiveMessage, false);
+//window.addEventListener("message", receiveMessage, false);
