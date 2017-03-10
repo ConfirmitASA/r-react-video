@@ -47,6 +47,7 @@ class ReactVideo extends React.Component {
               onSelect={this.onSelect}
               items={items}
             />
+            {this.renderNavigation()}
           </div>
         </div>
       )
@@ -58,6 +59,58 @@ class ReactVideo extends React.Component {
       } else {throw new Error('HitlistDatasource is not available')}
     }
     return render
+  }
+
+  renderNavigation(){
+    if(this.config){
+      const pagination = this.config.pagination;
+      if(pagination ==='continuous'){
+        return this.continuousNavigation();
+      } else {
+        return this.pagingNavigation();
+      }
+    } else {
+      return null
+    }
+  }
+
+  pagingNavigation(){
+    let pageInfo='';
+    console.log(this.DS.pageInfo,this.DS.sortingPagingValues);
+    if(this.DS.pageInfo && this.DS.sortingPagingValues && this.DS.sortingPagingValues.totalHits){
+      pageInfo = `${this.DS.pageInfo} of ${this.DS.sortingPagingValues.totalHits}`
+    }
+    return (
+      <div className="buttonRow">
+        <span rel="button"
+              className="materialButton accent"
+              onClick={this.loadPreviousPage}
+              disabled={this.DS.disablePrevButton}
+        >
+           {this.DS.i18n('REPORT_SINGLEVIEW_PREVIOUS')}
+        </span>
+        <span rel="button"
+              className="materialButton accent"
+              onClick={this.loadNextPage}
+              disabled={this.DS.disableNextButton}
+        >
+          {this.DS.i18n('REPORT_SINGLEVIEW_NEXT')}
+        </span>
+        <span>{pageInfo}</span>
+      </div>
+    )
+  }
+
+  continuousNavigation(){
+    return (
+      <div className="buttonRow" style={{textAlign:'center'}}>
+              <span rel="button"
+                    className="materialButton flat"
+                    onClick={this.loadMore}
+                    disabled={this.DS.disableNextButton}
+              >Load more</span>
+    </div>
+    )
   }
 
 
@@ -83,6 +136,16 @@ class ReactVideo extends React.Component {
     }
   }
 
+  loadNextPage=()=>{
+    this.DS.nextPage().then(response=>this.processData(response));
+  };
+  loadPreviousPage=()=>{
+    this.DS.previousPage().then(response=>this.processData(response));
+  };
+  loadMore=()=>{
+    this.DS.nextPage().then(response=>this.processData(response,'append'));
+  };
+
   initialiseConfig(configName){
     if(!this.config){
       if(!window[configName]){throw new Error('config is not passed from backed')}
@@ -90,7 +153,7 @@ class ReactVideo extends React.Component {
     }
   }
 
-  processData(data){
+  processData(data,mode='replace'){
     let c = this.config,
       config={};
     ['id','title','description','image','audio','video','tags'].forEach(item=>config[item]=[this.config[item]]);
@@ -106,7 +169,7 @@ class ReactVideo extends React.Component {
     let newData = data.map((item,index)=>{
       let parsedData ={};
       for(let key in config){
-        parsedData[key]=this.constructor.prepareData(item[config[key]],key);
+        parsedData[key]=this.prepareData(item[config[key]],key);
         // if image - we might want to use a placeholder as the thumb, and load the full image in background
         if(key == 'image'){
           if(this.props.thumbsPlaceholder){
@@ -119,7 +182,6 @@ class ReactVideo extends React.Component {
           parsedData.mediatype = key
         }
       }
-
       // get id for keys
       parsedData.id = item.responseid? item.responseid : index;
       // calculate link passed as `slink` property in data
@@ -130,17 +192,15 @@ class ReactVideo extends React.Component {
       return parsedData;
     });
 
-    //update state with the new set of data
-    this.setState({items:newData});
-    if(this.props.verbose){
-      console.log("data: ",newData);
-    }
+    //update state with the new set of data or a merged data
+    if(mode==='replace')this.setState({items:newData});
+    if(mode==='append')this.setState(prevState=>({items:[...prevState.items,...newData]}));
   }
 
   /**
   * massage data to fit the type we expect to receive in react view
   * */
-  static prepareData(data,type){
+  prepareData(data,type){
     switch(type){
       case 'image':
         let result = (/src='(.+?)'/gi).exec(data);
@@ -150,7 +210,7 @@ class ReactVideo extends React.Component {
       case 'title':
         return !(data.indexOf('-')>-1 && data.trim().length==1) ? data.trim() : undefined;
         break;
-      case 'tags': return data.indexOf(',')>-1? data.split(',') : data.indexOf('-')>-1 && data.trim().length==1? undefined : data.trim();
+      case 'tags': return data && (data.indexOf(',')>-1? data.split(',') : data.indexOf('-')>-1 && data.trim().length==1? undefined : data.trim());
         break;
     }
   }
