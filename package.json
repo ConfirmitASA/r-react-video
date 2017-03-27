@@ -15,8 +15,9 @@
     "lint": "eslint src",
     "docs": "node_modules/.bin/jsdoc --configure jsdoc.conf --verbose",
     "docs-commit": "git subtree push --prefix docs/r-react-video/0.1.0 origin gh-pages",
-    "test": "karma start --single-run --no-auto-watch karma.config.js",
-    "report-coverage": "codecov -f coverage/lcov.info"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "ConfirmitASA",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-eslint": "^6.1.2",
+    "babel-jest": "^19.0.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-istanbul": "^2.0.3",
@@ -36,23 +38,14 @@
     "codecov": ">1.0.0",
     "css-loader": "^0.23.1",
     "docdash": "^0.4.0",
+    "enzyme": "^2.7.1",
+    "enzyme-to-json": "^1.5.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^3.1.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "jasmine-core": "^2.4.1",
+    "jest": "^19.0.2",
+    "jest-cli": "^19.0.2",
     "jsdoc": "^3.4.0",
-    "karma": "^0.13.19",
-    "karma-chrome-launcher": "^0.2.2",
-    "karma-coverage": "^0.5.3",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-ie-launcher": "^1.0.0",
-    "karma-jasmine": "^0.3.6",
-    "karma-jasmine-ajax": "^0.1.13",
-    "karma-jasmine-jquery": "^0.1.1",
-    "karma-opera-launcher": "^1.0.0",
-    "karma-phantomjs-launcher": "^1.0.2",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.7.0",
     "loader-utils": "^0.2.12",
     "postcss": "^5.0.21",
     "postcss-apply": "^0.2.0",
@@ -61,6 +54,7 @@
     "postcss-inline-svg": "trysound/postcss-inline-svg",
     "postcss-loader": "^0.9.1",
     "r-visual-fixture-test": "github:confirmitasa/r-visual-fixture-test",
+    "regenerator-runtime": "^0.10.3",
     "rimraf": "^2.5.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
@@ -69,10 +63,35 @@
     "MDIcon": "github:jahglow/MDIcon",
     "ProportionalImage": "github:confirmitasa/ProportionalImage",
     "r-hitlist-datasource": "github:confirmitasa/r-hitlist-datasource",
+    "react": "^15.4.2",
     "r-reportal-base": "github:confirmitasa/r-reportal-base"
   },
   "peerDependencies": {
-    "react": "^15.4.2",
     "react-dom": "^15.4.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/**/*.test.{js,jsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 98,
+        "branches": 91,
+        "functions": 98,
+        "lines": 98
+      }
+    },
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "setupFiles": ["<rootDir>/tools/jestsetup.js"],
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      ".*\\.(css|less|styl|scss|sass)$": "<rootDir>/tools/mocks/cssModule.js",
+      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/mocks/image.js"
+    }
   }
 }

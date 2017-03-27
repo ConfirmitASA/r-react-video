@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ImageGrid /> should render 10 ImageGridTile elements when items are not empty 1`] = `
+<div
+  className="ImageGrid"
+>
+  <ImageGridTile
+    aspect="16:9"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A0AD3B3394FEC6C3E67BA4E634142192.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A0AD3B3394FEC6C3E67BA4E634142192_thumb.jpg"
+    title="REP2229"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="some descr"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A0AD3B3394FEC6C3E67BA4E634142192.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A0AD3B3394FEC6C3E67BA4E634142192_thumb.jpg"
+    title="BLA BLA 222"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="Not a trace of \\"-and then I woke up and it was all a dream\\" here."
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/4E7FE18382091B05AB181D863CDCFBBC.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/4E7FE18382091B05AB181D863CDCFBBC_thumb.jpg"
+    title="10 Best Video Game Ending NEW TITLE"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="Let's watch another 11 new life hacks that really can make life easier. all this life hacks are working and we have all tested before putting them in this video. Let's watch another 11 new life hacks that really can make life easier. all this life hacks are working and we have all tested before putting them in this video. Let's watch another 11 new life hacks that really can make life easier. all this life hacks are working and we have all tested before putting them in this video."
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/7F9549FA8E9AB10AD0278BCDE8667DE4.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/7F9549FA8E9AB10AD0278BCDE8667DE4_thumb.jpg"
+    title="11 Interesting Life Hacks That Really Can Make Life Easier"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="Police Chase Thief | Zool Babies Cartoon Animation"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/DDCB5083040974ECF01DCF097059D425.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/DDCB5083040974ECF01DCF097059D425_thumb.jpg"
+    title="Zool Babies As Police"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="Check out the updated version of this tutorial"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A137C51DA64AA412DA871ECBBA855BB9.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A137C51DA64AA412DA871ECBBA855BB9_thumb.jpg"
+    title="How To Create Infographics (The Ultra-Simple & Easy Way)"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="Check out these surprising and interesting facts about money!"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/4E7FE18382091B05AB181D863CDCFBBC.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/4E7FE18382091B05AB181D863CDCFBBC_thumb.jpg"
+    title="SURPRISING And Interesting Facts About Money!"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="by Wall Street Survivor"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/7F9549FA8E9AB10AD0278BCDE8667DE4.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/7F9549FA8E9AB10AD0278BCDE8667DE4_thumb.jpg"
+    title="What are Interests Rates"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="Watch Now"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/DDCB5083040974ECF01DCF097059D425.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/DDCB5083040974ECF01DCF097059D425_thumb.jpg"
+    title="Top 10 Interview Questions and Answers"
+  />
+  <ImageGridTile
+    aspect="16:9"
+    description="Real Time with Bill Maher (HBO)"
+    iconColor="#cccccc"
+    iconSize={48}
+    image="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A137C51DA64AA412DA871ECBBA855BB9.jpg"
+    mediatype="image"
+    onSelect={[Function]}
+    placeholder="/reportal/a-b/Report/ac911638-3da8-430f-a236-e5f67247773d/p1855261951/img/A137C51DA64AA412DA871ECBBA855BB9_thumb.jpg"
+    title="President Obama: FULL INTERVIEW"
+  />
+  0
+</div>
+`;
+
+exports[`<ImageGrid /> should render a grid 1`] = `
+<div
+  className="ImageGrid"
+>
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+  <div
+    className="ImageGridTile"
+  />
+</div>
+`;

@@ -1,6 +1,6 @@
 // https://jsbin.com/junajanaqi/4/edit?js,console
 
-class Cart {
+export default class Cart {
   constructor(items=[]){
     this._undone=0;
     this.cart = new Map();
@@ -29,7 +29,7 @@ class Cart {
     if(this._undone===0 || this.isNewItem(item)){
       this._toHistory(item, {action:'add', quantity})
     }
-    console.log(`Added ${JSON.stringify(item)}, cart length is ${this.cart.size}`)
+    //console.log(`Added ${JSON.stringify(item)}, cart length is ${this.cart.size}`)
   }
   isNewItem(item){
     return this.history.filter(i=>i[0]===item).length==0
@@ -37,7 +37,7 @@ class Cart {
   remove(item){
     let meta = this.cart.get(item);
     this.cart.delete(item);
-    console.log(`Deleted ${JSON.stringify(item)}, cart length is ${this.cart.size}`);
+    //console.log(`Deleted ${JSON.stringify(item)}, cart length is ${this.cart.size}`);
     this._undone===0 && this._toHistory(item, {action:'remove', ...meta});
   }
   /**
@@ -53,7 +53,7 @@ class Cart {
     val.quantity = val.quantity + newQ;
     this.cart.set(item,val);
     (this._undone===0 || this.isNewItem(item)) && this._toHistory(item,{action:'changeCount', quantity, increment})
-    console.log(`Changed count for ${JSON.stringify(item)}, to ${val.quantity}`);
+    //console.log(`Changed count for ${JSON.stringify(item)}, to ${val.quantity}`);
 
   }
   _toHistory(item,payload){
@@ -101,6 +101,7 @@ class Cart {
   }
 }
 
+/*
 let iCart = new Cart([{id:1,value:'1'},{id:2,value:2},{id:3,value:3},{id:4,value:4}])
 iCart.undo();
 iCart.undo();
@@ -110,4 +111,5 @@ iCart.add({totally:'new',value:true},3);
 iCart.changeCount(iCart.cart.entries().next().value[0], 6)// changes count for the first item
 iCart.undo();
 iCart.redo();
+*/
 

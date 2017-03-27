@@ -5,6 +5,7 @@ import React from 'react';
 import ImageGrid from '../ImageGrid/ImageGrid';
 import HitlistDS from "r-hitlist-datasource";
 import SingleView from "../SingleView/SingleView";
+import unionBy from 'lodash/unionBy';
 
 class ReactVideo extends React.Component {
   /**
@@ -21,25 +22,26 @@ class ReactVideo extends React.Component {
     this.setupDataListener();
     this.state = {
       items:null,
+      error:false,
       singleView:{
         link:''
       },
       singleViewVisible:false
     };
-    this.backCallback=this.backCallback.bind(this);
+    this.returnToGrid =this.returnToGrid.bind(this);
   }
 
   render() {
-    const {items,singleViewVisible,singleView}=this.state;
+    const {items,singleViewVisible,singleView,error}=this.state;
     let render = null;
-    if(Array.isArray(items) && items.length!=0){
+    if(!error && Array.isArray(items) && items.length!=0){
       render = (
         <div className={`GridContainer ${!singleViewVisible ? 'GridView':''}`}>
             <SingleView
               link={singleView.link}
               visible={singleViewVisible}
               initialLoad={true}
-              backCallback={this.backCallback}
+              returnToGridAction={this.returnToGrid}
               headerText={`Edit video "${singleView.title}"`} />
           <div className="ImageGridContainer" style={{display: !singleViewVisible? 'block' : 'none'}}>
             <ImageGrid
@@ -54,11 +56,26 @@ class ReactVideo extends React.Component {
     } else {
       if(this.DS){
         render = (
-          <div className="GridContainer ImageGrid">{this.DS.i18n(Array.isArray(items) && items.length==0 ? 'REPORT_SINGLEVIEW_NOTHINGFOUND':'loadingData')}</div>
+          <div className="GridContainer ImageGrid">{this.dataLoadingMessage()}</div>
         )
-      } else {throw new Error('HitlistDatasource is not available')}
+      } else {
+        throw new Error('HitlistDatasource is not available')
+      }
     }
     return render
+  }
+
+  dataLoadingMessage(){
+    let message;
+    const {items,error} = this.state;
+    if(error){
+      message = 'errorLoading'
+    } else if(Array.isArray(items) && items.length==0 ){
+      message = 'REPORT_SINGLEVIEW_NOTHINGFOUND'
+    } else {
+       message = 'loadingData'
+    }
+    return this.DS.i18n(message)
   }
 
   renderNavigation(){
@@ -76,7 +93,6 @@ class ReactVideo extends React.Component {
 
   pagingNavigation(){
     let pageInfo='';
-    console.log(this.DS.pageInfo,this.DS.sortingPagingValues);
     if(this.DS.pageInfo && this.DS.sortingPagingValues && this.DS.sortingPagingValues.totalHits){
       pageInfo = `${this.DS.pageInfo} of ${this.DS.sortingPagingValues.totalHits}`
     }
@@ -114,11 +130,6 @@ class ReactVideo extends React.Component {
   }
 
 
-  backCallback(){
-    this.setState({singleViewVisible:false});
-    this.DS.initialDataLoad().then(response=>this.processData(response));
-  }
-
   /**
    * Launches listener for `Y.Global.reportcontroller:viewModeDataUpdate` event within YUI which is triggered every time the filter panel updates or on initial load
    * */
@@ -128,7 +139,7 @@ class ReactVideo extends React.Component {
         this.initialiseConfig(this.props.config);
         if(this.DS && this.config){
           this.DS.modifier = filterInfo; // filter information as a modifier for data fetch
-          this.DS.initialDataLoad().then(response=>this.processData(response))
+          this.DS.initialDataLoad().then(response=>this.processData(response)).catch(this.handleDataLoadingError)
         }
       })
     } else {
@@ -136,14 +147,27 @@ class ReactVideo extends React.Component {
     }
   }
 
+  handleDataLoadingError=()=>{
+    this.setState({
+      error:true,
+      items:[]
+    })
+  };
+
+  returnToGrid(){
+    console.log('will return to grid');
+    this.setState({singleViewVisible:false});
+    this.DS.initialDataLoad().then(response=>this.processData(response,'merge')).catch(this.handleDataLoadingError);
+  }
+
   loadNextPage=()=>{
-    this.DS.nextPage().then(response=>this.processData(response));
+    this.DS.nextPage().then(response=>this.processData(response)).catch(this.handleDataLoadingError);
   };
   loadPreviousPage=()=>{
-    this.DS.previousPage().then(response=>this.processData(response));
+    this.DS.previousPage().then(response=>this.processData(response)).catch(this.handleDataLoadingError);
   };
   loadMore=()=>{
-    this.DS.nextPage().then(response=>this.processData(response,'append'));
+    this.DS.nextPage().then(response=>this.processData(response,'append')).catch(this.handleDataLoadingError);
   };
 
   initialiseConfig(configName){
@@ -193,8 +217,25 @@ class ReactVideo extends React.Component {
     });
 
     //update state with the new set of data or a merged data
-    if(mode==='replace')this.setState({items:newData});
-    if(mode==='append')this.setState(prevState=>({items:[...prevState.items,...newData]}));
+    if(mode==='replace'){
+      this.setState({
+        items:newData,
+        error:false
+      });
+    } else if(mode==='append'){
+      this.setState(prevState=>({
+        items:[...prevState.items,...newData],
+        error:false
+      }));
+    } else if(mode==='merge'){
+      console.log(mode);
+      this.setState(prevState=>({
+        items: unionBy(newData,prevState.items,'id'),
+        error:false
+      }))
+    } else {
+      console.log('хрен знает что')
+    }
   }
 
   /**

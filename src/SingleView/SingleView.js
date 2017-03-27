@@ -10,7 +10,7 @@ export default class SingleView extends React.Component {
    * @param {Boolean} props.initialLoad - whether it's the first time the renderIframe loads (necessary for the survey, because an initial load is the first time the survey loads, and second load is when the survey is submitted)
    * @param {String} props.link - the link to a page to load in an renderIframe
    * @param {String} [props.headerText] - the text to be displayed next to the back button in the nav header
-   * @param {Function} props.backCallback - the callback executed when the user wants to navigate off the SingleView page (hitting back or submit)
+   * @param {Function} props.returnToGrid - the callback executed when the user wants to navigate off the SingleView page (hitting back or submit)
    * @param {Boolean} [props.closeOnSubmit = false] - the callback executed when the user wants to navigate off the SingleView page (hitting back or submit)
    * */
   constructor(props) {
@@ -88,7 +88,7 @@ export default class SingleView extends React.Component {
     return (
       <div className="SingleView" style={{display: this.state.visible ? 'block' : 'none'}}>
         <div className="SingleView--header">
-          <span className="SingleView--back-button" title="Return to the list" onClick={this.props.backCallback}>
+          <span className="SingleView--back-button" title="Return to the list" onClick={this.props.returnToGridAction}>
             <MDIcon icon={ic_arrow_back}/>
           </span>
           {this.props.headerText}
