@@ -1,6 +1,6 @@
 import React from "react";
 import MDIcon from 'MDIcon';
-import {ic_arrow_back} from '../icons';
+import {ic_arrow_back,ic_arrow_forward,ic_view_module} from '../icons';
 
 export default class SingleView extends React.Component {
   /**
@@ -16,21 +16,21 @@ export default class SingleView extends React.Component {
   constructor(props) {
     super(props);
     let {visible, link, initialLoad=true} = this.props;
-    this.state                       = {
+
+    this.state = {
       visible,
       link,
       initialLoad,
       iframeVisible: false,
       iframeHeight : 'auto',
     };
-    this.onLoad                      = this.onLoad.bind(this);
-    this.receiveMessage              = this.receiveMessage.bind(this);
+
     window.addEventListener("message", this.receiveMessage, false);
   }
 
 
   componentWillReceiveProps(nextProps) {
-    this.mapPropsToState(nextProps)
+    //this.mapPropsToState(nextProps)
   }
 
   mapPropsToState(props) {
@@ -48,7 +48,7 @@ export default class SingleView extends React.Component {
     this.handshake(this.iframeEl, this.getDomain(this.state.link))
   }
 
-  onLoad(e) {
+  onLoad=(e)=>{
     if(this.state.link.length>0){
       if (this.state.initialLoad) {
         this.setState({
@@ -73,7 +73,7 @@ export default class SingleView extends React.Component {
     }
   }
 
-  receiveMessage(event) {
+  receiveMessage=(event)=>{
     let origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
     if (origin !== this.targetOrigin)return;
     if (event.data && event.data.action && this[event.data.action]) {
@@ -81,19 +81,24 @@ export default class SingleView extends React.Component {
     } else {
       console.warn('action not found for ', event.data, event.data.action, this[event.data.action])
     }
-  }
+  };
 
   render() {
-    let {link, visible,iframeVisible} = this.state;
+    let {link,visible, loadPreviousItem,returnToGridAction,loadNextItem,disableSingleViewPrev,disableSingleViewNext} = this.props;
     return (
-      <div className="SingleView" style={{display: this.state.visible ? 'block' : 'none'}}>
+      <div className="SingleView" style={{display: visible ? 'block' : 'none'}}>
         <div className="SingleView--header">
-          <span className="SingleView--back-button" title="Return to the list" onClick={this.props.returnToGridAction}>
+          <span className="SingleView--nav-button" disabled={disableSingleViewPrev} title="Previous item" onClick={loadPreviousItem}>
             <MDIcon icon={ic_arrow_back}/>
           </span>
-          {this.props.headerText}
+          <span className="SingleView--nav-button" title="Return to the list" onClick={returnToGridAction}>
+            <MDIcon icon={ic_view_module}/>
+          </span>
+          <span className="SingleView--nav-button" disabled={disableSingleViewNext} title="Next Item" onClick={loadNextItem}>
+            <MDIcon icon={ic_arrow_forward}/>
+          </span>
         </div>
-        {this.renderIframe(link, visible ? iframeVisible : visible)}
+        <iframe ref={iframe => this.iframeEl = iframe} src={link}/>
       </div>
     )
   }
@@ -104,14 +109,13 @@ export default class SingleView extends React.Component {
    * @param {String} visible - visibility of the renderIframe
    * @param {String} height - height of the renderIframe
    * */
-  renderIframe(link, visible) {
+  renderIframe(link) {
     return <iframe
       ref={iframe => {
         this.iframeEl = iframe
       }}
       src={link}
-      onLoad={this.onLoad}
-      style={{display: visible ? 'block' : 'none'}}/>;
+/>;
   }
 }
 

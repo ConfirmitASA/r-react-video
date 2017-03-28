@@ -13,12 +13,15 @@ import ImageGridTile from '../ImageGridTile/ImageGridTile';
  * @param {Number} props.dummyItems - function that is executed when an item is clicked on
  * */
 class ImageGrid extends PureComponent {
+
+  itemClickHandler = (item) => (event) => this.props.onSelect(item);
+
   render() {
-    const {items,dummyItems,aspect,placeholderSizing,actionIcon,onSelect} = this.props;
+    const {items, dummyItems, aspect, placeholderSizing, actionIcon} = this.props;
     return (
       <div className="ImageGrid">
         {
-          Array.isArray(items) && items.length>0 && items.map((item,index)=>(
+          Array.isArray(items) && items.length > 0 && items.map(item => (
             <ImageGridTile
               key={item.id.toString()}
               aspect={aspect}
@@ -29,7 +32,7 @@ class ImageGrid extends PureComponent {
               title={item.title}
               description={item.description}
               actionIcon={actionIcon}
-              onSelect={()=>onSelect.call(this,item)}
+              onSelect={this.itemClickHandler(item)}
             />
           ))
         }
@@ -38,16 +41,16 @@ class ImageGrid extends PureComponent {
     )
   }
 
-  renderDummyItems(count){
-    const dummyItems=[];
-      while(count--){
-        dummyItems.push(<div className="ImageGridTile" key={`dummy${count}`}/>)
-      }
-      return dummyItems
+  renderDummyItems(count) {
+    const dummyItems = [];
+    while (count--) {
+      dummyItems.push(<div className="ImageGridTile" key={`dummy${count}`}/>)
+    }
+    return dummyItems
   }
 }
 
-ImageGrid.propTypes={
+ImageGrid.propTypes = {
   items: PropTypes.array,
   aspect: PropTypes.string,
   actionIcon: PropTypes.element,
@@ -56,8 +59,8 @@ ImageGrid.propTypes={
   dummyItems: PropTypes.number
 };
 
-ImageGrid.defaultProps={
-  dummyItems:12
+ImageGrid.defaultProps = {
+  dummyItems: 12
 };
 
 export default ImageGrid;
