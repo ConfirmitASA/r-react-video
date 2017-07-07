@@ -1,11 +1,11 @@
 /**
  * Created by IvanP on 11.01.2017.
  */
-import React from 'react';
-import ImageGrid from '../ImageGrid/ImageGrid';
+import React from "react";
+import ImageGrid from "../ImageGrid/ImageGrid";
 import HitlistDS from "r-hitlist-datasource";
 import SingleView from "../SingleView/SingleView";
-import unionBy from 'lodash/unionBy';
+import unionBy from "lodash/unionBy";
 
 class ReactVideo extends React.Component {
   /**
@@ -152,7 +152,8 @@ class ReactVideo extends React.Component {
     }
   }
 
-  handleDataLoadingError = () => {
+  handleDataLoadingError = (err) => {
+    console.log(err);
     this.setState({
       error: true,
       items: []
@@ -193,10 +194,10 @@ class ReactVideo extends React.Component {
     if (!items.hasOwnProperty('then')) {
       items = Promise.resolve(items);
     }
-    const [disableSingleViewPrev,disableSingleViewNext]= this.checkSingleViewNavState(nextIndex);
+    const [disableSingleViewPrev, disableSingleViewNext] = this.checkSingleViewNavState(nextIndex);
     items.then(() => {
       let singleView;
-      this.setState(prevState=>{
+      this.setState(prevState => {
         const newItems = prevState.items;
         if (nextIndex < 0 && !disableSingleViewPrev) {
           singleView = newItems[newItems.length - 1]
@@ -229,8 +230,8 @@ class ReactVideo extends React.Component {
   };
 
   onSelect = (item) => {
-      const [disableSingleViewPrev,disableSingleViewNext]= this.checkSingleViewNavState(this.state.items.indexOf(item));
-        this.setState({
+    const [disableSingleViewPrev, disableSingleViewNext] = this.checkSingleViewNavState(this.state.items.indexOf(item));
+    this.setState({
       disableSingleViewPrev,
       disableSingleViewNext,
       singleView: item,
@@ -238,7 +239,7 @@ class ReactVideo extends React.Component {
     })
   };
 
-  checkSingleViewNavState(currentItemIndex){
+  checkSingleViewNavState(currentItemIndex) {
     const items = this.state.items;
     let disableSingleViewNext = false,
       disableSingleViewPrev = false;
@@ -246,7 +247,7 @@ class ReactVideo extends React.Component {
     if (currentItemIndex <= 0 && this.DS.disablePrevButton) {
       disableSingleViewPrev = true;
     }
-    if (currentItemIndex >= items.length-1 && this.DS.disableNextButton) {
+    if (currentItemIndex >= items.length - 1 && this.DS.disableNextButton) {
       disableSingleViewNext = true;
     }
     return [
@@ -283,14 +284,16 @@ class ReactVideo extends React.Component {
       for (let key in config) {
         parsedData[key] = this.prepareData(item[config[key]], key);
         // if image - we might want to use a placeholder as the thumb, and load the full image in background
-        if (key == 'image') {
-          if (this.props.thumbsPlaceholder) {
-            parsedData['placeholder'] = parsedData.image;
+        if (key === 'image') {
+          if(parsedData.image){
+            if (this.props.thumbsPlaceholder) {
+              parsedData.placeholder = parsedData.image;
+            }
+            parsedData.image = parsedData.image.replace(/_thumb/gi, '');
           }
-          parsedData.image = parsedData.image.replace(/_thumb/gi, '');
         }
         // calculate mediatype or a placeholder icon
-        if (['video', 'audio', 'image'].indexOf(key) > -1 && config[key]) {
+        if (['video', 'audio', 'image'].indexOf(key) > -1 && config[key] && parsedData[key]) {
           parsedData.mediatype = key
         }
       }
@@ -333,24 +336,27 @@ class ReactVideo extends React.Component {
     switch (type) {
       case 'image':
         let result = (/src='(.+?)'/gi).exec(data);
-        return result && result != null && result[1] ? result[1] : undefined;
+        return result && result !== null && result[1] ? result[1] : undefined;
         break;
       case 'description':
       case 'title':
-        return !(data.indexOf('-') > -1 && data.trim().length == 1) ? data.trim() : undefined;
+      case 'video':
+      case 'audio':
+        return !(data.indexOf('-') > -1 && data.trim().length === 1) ? data.trim() : undefined;
         break;
       case 'tags':
-        return data && (data.indexOf(',') > -1 ? data.split(',') : data.indexOf('-') > -1 && data.trim().length == 1 ? undefined : data.trim());
+        return data && (data.indexOf(',') > -1 ? data.split(',') : data.indexOf('-') > -1 && data.trim().length === 1 ? undefined : data.trim());
         break;
     }
   }
 
 
   static actionIcon() {
-    return <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-    </svg>
+    return (
+      <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+      </svg>
+    )
   }
 }
 

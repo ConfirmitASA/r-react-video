@@ -57,15 +57,21 @@ class ImageGridTile extends PureComponent{
   }
 
   _computeTileType() {
-    const {placeholder,mediatype,iconSize,iconColor} = this.props;
-    if (!placeholder && mediatype) {
-      if (MEDIA_TYPES.indexOf(mediatype) == -1) {
-        throw new Error(`Unrecognized type "${mediatype}" is specified`)
+    try {
+      const {placeholder,mediatype,iconSize,iconColor} = this.props;
+      if (!placeholder && mediatype) {
+        if (MEDIA_TYPES.indexOf(mediatype) === -1) {
+          throw new Error(`Unrecognized type "${mediatype}" is specified`)
+        }
+        let icon = ImageGridTile.iconServer(mediatype, iconSize, iconColor);
+        return 'data:image/svg+xml,' + escape(icon);
+      } else if(!!placeholder){
+        return placeholder
+      } else {
+        return 'data:image/svg+xml,' + escape(ImageGridTile.iconServer('unknown', iconSize, iconColor))
       }
-      let icon = ImageGridTile.iconServer(mediatype, iconSize, iconColor);
-      return 'data:image/svg+xml,' + escape(icon);
-    } else {
-      return placeholder
+    } catch (error){
+      console.error(error)
     }
   }
 
@@ -77,16 +83,21 @@ class ImageGridTile extends PureComponent{
    * @returns {String}
    * */
   static iconServer(name, size = 48, fill = "#cccccc") {
-    const icons = {
-      image: `<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>`,
-      audio: `<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>`,
-      video: `<path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>`
-    };
-    if (!icons[name]) {
-      throw new Error(`icon "${name}" is not on the list`)
-    }
+    try {
+      const icons = {
+        image: `<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>`,
+        audio: `<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>`,
+        video: `<path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>`,
+        unknown: `<path d="M21 5v6.59l-3-3.01-4 4.01-4-4-4 4-3-3.01V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2zm-3 6.42l3 3.01V19c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-6.58l3 2.99 4-4 4 4 4-3.99z"/>`,
+      };
+      if (!icons[name]) {
+        throw new Error(`icon "${name}" is not on the list`)
+      }
 
-    return `<svg fill="${fill}" height="${size}" viewBox="0 0 24 24" width="${size}" xmlns="http://www.w3.org/2000/svg">${icons[name]}</svg>`
+      return `<svg fill="${fill}" height="${size}" viewBox="0 0 24 24" width="${size}" xmlns="http://www.w3.org/2000/svg">${icons[name]}</svg>`
+    } catch(error){
+      console.error(error)
+    }
   }
 }
 

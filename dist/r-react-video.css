@@ -13,7 +13,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  display: none
+  display: none;
+  background-color: #f0f2f5
 }
 .ProportionalImage>img {
   display: block;

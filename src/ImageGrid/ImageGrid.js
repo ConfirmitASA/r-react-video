@@ -28,7 +28,7 @@ class ImageGrid extends PureComponent {
               image={item.image}
               mediatype={item.mediatype}
               placeholder={item.placeholder}
-              placeholderSizing={placeholderSizing}
+              placeholderSizing={item.image?placeholderSizing:'initial'}
               title={item.title}
               description={item.description}
               actionIcon={actionIcon}
@@ -40,6 +40,7 @@ class ImageGrid extends PureComponent {
       </div>
     )
   }
+
 
   renderDummyItems(count) {
     const dummyItems = [];
