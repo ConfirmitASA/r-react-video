@@ -33,7 +33,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-regenerator": "^6.14.0",
     "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-latest": "^6.22.0",
+    "babel-preset": "^6.22.0",
+    "babel-preset-env":"^1.6.0",
     "babel-preset-react": "^6.16.0",
     "codecov": ">1.0.0",
     "css-loader": "^0.23.1",
@@ -43,6 +44,7 @@
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^3.1.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "flow-bin": "^0.53.1",
     "jest": "^19.0.2",
     "jest-cli": "^19.0.2",
     "jsdoc": "^3.4.0",
@@ -63,8 +65,8 @@
     "MDIcon": "github:jahglow/MDIcon",
     "ProportionalImage": "github:confirmitasa/ProportionalImage",
     "r-hitlist-datasource": "github:confirmitasa/r-hitlist-datasource",
-    "react": "^15.4.2",
-    "r-reportal-base": "github:confirmitasa/r-reportal-base"
+    "r-reportal-base": "github:confirmitasa/r-reportal-base",
+    "react": "^15.4.2"
   },
   "peerDependencies": {
     "react-dom": "^15.4.2"
@@ -85,7 +87,9 @@
     "moduleDirectories": [
       "node_modules"
     ],
-    "setupFiles": ["<rootDir>/tools/jestsetup.js"],
+    "setupFiles": [
+      "<rootDir>/tools/jestsetup.js"
+    ],
     "snapshotSerializers": [
       "<rootDir>/node_modules/enzyme-to-json/serializer"
     ],

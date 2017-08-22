@@ -1,5 +1,5 @@
 {
-  "presets": ["latest","react"],
+  "presets": ["flow", "env", "react"],
   "plugins":[
     "transform-object-rest-spread"
   ]

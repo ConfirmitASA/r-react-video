@@ -37,6 +37,7 @@
     color: rgba(0,0,0,.32) !important;
   }
   &:hover{
+    
   }
   &.accent{
     background-color: var(--accent-color,#42bd41);
