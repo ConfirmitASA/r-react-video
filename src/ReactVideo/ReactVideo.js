@@ -37,17 +37,19 @@ class ReactVideo extends React.Component {
     if (!error && Array.isArray(items) && items.length !== 0) {
       render = (
         <div className={`GridContainer ${!singleViewVisible ? 'GridView' : ''}`}>
-          <SingleView
-            link={singleView.link}
-            visible={singleViewVisible}
-            initialLoad={true}
+          {singleViewVisible && (
+            <SingleView
             returnToGridAction={this.returnToGrid}
             loadPreviousItem={this.loadPreviousItem}
             loadNextItem={this.loadNextItem}
             headerText={`Edit video "${singleView.title}"`}
             disableSingleViewPrev={disableSingleViewPrev}
             disableSingleViewNext={disableSingleViewNext}
-          />
+          >
+            <iframe src={singleView.link}>
+          </SingleView>
+          )
+        }
           <div className="ImageGridContainer" style={{display: !singleViewVisible ? 'block' : 'none'}}>
             <ImageGrid
               aspect="16:9"
