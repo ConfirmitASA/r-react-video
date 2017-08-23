@@ -9,7 +9,7 @@
   bottom: 0;
   left: 0;
   overflow: hidden;
-  
+
 
   &--header {
     display: flex;
@@ -48,7 +48,7 @@
     }
   }
 
-  & iframe {
+  & .renderArea {
     width: 100%;
     border: 0;
     background: transparent;
