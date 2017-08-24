@@ -18,7 +18,7 @@ const NavBar = function (props:NavBarProps) {
 
 export default class SingleView extends PureComponent<Props, void> {
   render() {
-    const { children, visible, ...navBarProps} = this.props;
+    const {children, ...navBarProps} = this.props;
     return (
       <div className="SingleView">
         <NavBar {...navBarProps}/>
