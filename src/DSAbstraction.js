@@ -48,6 +48,7 @@ export default function DSAbstraction(options: Options) {
                 throw new Error('config is not passed from backend')
             }
             config = window[configName];
+            component.setState({config})
         }
     }
 
@@ -131,25 +132,25 @@ export default function DSAbstraction(options: Options) {
     };
 
     DS.loadNextPage = () => {
-        DS.nextPage()
+        return DS.nextPage()
             .then(processData)
             .catch(handleDataLoadingError);
     };
 
     DS.loadPreviousPage = () => {
-        DS.previousPage()
+        return DS.previousPage()
             .then(processData)
             .catch(handleDataLoadingError);
     };
 
     DS.loadMore = () => {
-        DS.nextPage()
+        return DS.nextPage()
             .then(response => processData(response, 'append'))
             .catch(handleDataLoadingError);
     };
 
     DS.initialLoad = () => {
-        DS.initialDataLoad()
+        return DS.initialDataLoad()
             .then(processData)
             .catch(handleDataLoadingError);
     };
@@ -159,7 +160,7 @@ export default function DSAbstraction(options: Options) {
          return hasPageInfo? `${DS.pageInfo} of ${DS.sortingPagingValues.totalHits}` : '';
     };
 
-    DS.config = () => config;
+    DS.config = () => {return config!=null? config : initialiseConfig(options.config)};
 
     return DS
 }

@@ -5,6 +5,7 @@ import React from "react";
 import ImageGrid from "../ImageGrid/ImageGrid";
 import SingleView from "../SingleView/SingleView";
 import DSAbstraction from '../DSAbstraction'
+import Navigation from './Navigation'
 
 export default class ReactVideo extends React.Component {
   /**
@@ -22,6 +23,7 @@ export default class ReactVideo extends React.Component {
   state = {
     items: null,
     error: false,
+    config: null,
     singleView: {
       link: ''
     },
@@ -30,11 +32,26 @@ export default class ReactVideo extends React.Component {
     disableSingleViewNext: false,
   };
 
+  translate = this.DS.i18n.bind(this.DS);
 
   render() {
     const { items, singleViewVisible, singleView, error, disableSingleViewPrev, disableSingleViewNext } = this.state;
     let render = null;
     if (!error && Array.isArray(items) && items.length !== 0) {
+
+      const { loadPreviousPage, loadNextPage, loadMore, disableNextButton, disablePrevButton, getPageInfo } = this.DS;
+      const navigationProps = {
+        loadPreviousPage,
+        loadNextPage,
+        loadMore,
+        disableNextButton,
+        disablePrevButton,
+        pageInfo: getPageInfo(),
+        config: this.state.config,
+        translate: this.translate
+      }
+      console.log(navigationProps);
+
       render = (
         <div className={`GridContainer ${!singleViewVisible ? 'GridView' : ''}`}>
           {singleViewVisible && (
@@ -56,7 +73,7 @@ export default class ReactVideo extends React.Component {
               onSelect={this.onSelect}
               items={items}
             />
-            {this.renderNavigation()}
+            <Navigation {...navigationProps} />
           </div>
         </div>
       )
@@ -85,54 +102,6 @@ export default class ReactVideo extends React.Component {
     return this.DS.i18n(message)
   }
 
-  renderNavigation() {
-    const config = this.DS.config();
-    if (config) {
-      const pagination = config.pagination;
-      if (pagination === 'continuous') {
-        return this.continuousNavigation();
-      } else {
-        return this.pagingNavigation();
-      }
-    } else {
-      return null
-    }
-  }
-
-  pagingNavigation() {
-    const pageInfo = this.DS.getPageInfo();
-    return (
-      <div className="buttonRow">
-        <span rel="button"
-          className="materialButton accent"
-          onClick={this.DS.loadPreviousPage}
-          disabled={this.DS.disablePrevButton}
-        >
-          {this.DS.i18n('REPORT_SINGLEVIEW_PREVIOUS')}
-        </span>
-        <span rel="button"
-          className="materialButton accent"
-          onClick={this.DS.loadNextPage}
-          disabled={this.DS.disableNextButton}
-        >
-          {this.DS.i18n('REPORT_SINGLEVIEW_NEXT')}
-        </span>
-        <span>{pageInfo}</span>
-      </div>
-    )
-  }
-
-  continuousNavigation() {
-    return (
-      <div className="buttonRow" style={{ textAlign: 'center' }}>
-        <span rel="button"
-          className="materialButton flat"
-          onClick={this.DS.loadMore}
-          disabled={this.DS.disableNextButton}
-        >Load more</span>
-      </div>
-    )
-  }
 
 
   returnToGrid = () => {
@@ -155,36 +124,44 @@ export default class ReactVideo extends React.Component {
 
   navigateItems(direction) {
     let items = this.state.items;
+    const paginationType = this.state.config.pagination;
     let itemsLength = items.length - 1;
-    const prevData = this.state.singleView;
-    let prevIndex = items.indexOf(prevData);
-    let nextIndex = direction === 'forward' ? ++prevIndex : --prevIndex;
+    const currentSingleViewItemIndex = items.indexOf(this.state.singleView);
+    const nextIndex = direction === 'forward' ? currentSingleViewItemIndex+1 : currentSingleViewItemIndex-1;
 
-    if (nextIndex < 0 && !this.DS.disablePrevButton) {
+    const loadItemFromPreviousPage = nextIndex < 0 && !this.DS.disablePrevButton;
+    const loadItemFromNextPage = nextIndex > itemsLength && !this.DS.disableNextButton;
+
+    // assign items to thenable promises if requested item is outside of data boundaries
+    if (loadItemFromPreviousPage) {
       items = this.DS.loadPreviousPage();
-    } else if (nextIndex > itemsLength && !this.DS.disableNextButton) {
-      items = this.DS.loadNextPage()
+    } else if (loadItemFromNextPage) {
+      items = paginationType !== 'continuous' ? this.DS.loadNextPage() : this.DS.loadMore();
     }
-
-    if (!items.hasOwnProperty('then')) {
+    const itemsArePromised = items.hasOwnProperty('then')
+    if (!itemsArePromised) {
       items = Promise.resolve(items);
     }
+
     const [disableSingleViewPrev, disableSingleViewNext] = this.checkSingleViewNavState(nextIndex);
     items.then(() => {
-      let singleView;
+      let singleViewData;
       this.setState(prevState => {
         const newItems = prevState.items;
-        if (nextIndex < 0 && !disableSingleViewPrev) {
-          singleView = newItems[newItems.length - 1]
-        } else if (nextIndex > itemsLength && !disableSingleViewNext) {
-          singleView = newItems[0]
+        const atDataLeftBoundaryCanLoad = nextIndex < 0 && !disableSingleViewPrev;
+        const atDataRightBoundaryCanLoad = nextIndex > itemsLength && !disableSingleViewNext && paginationType !== 'continuous';
+        if (atDataLeftBoundaryCanLoad) {
+          singleViewData = newItems[newItems.length - 1]
+        } else if (atDataRightBoundaryCanLoad) {
+          singleViewData = newItems[0]
         } else {
-          singleView = newItems[nextIndex]
+          singleViewData = newItems[nextIndex]
         }
+
         return {
           disableSingleViewNext,
           disableSingleViewPrev,
-          singleView: singleView,
+          singleView: singleViewData,
           singleViewVisible: true
         }
       });
