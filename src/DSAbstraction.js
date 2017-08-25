@@ -156,7 +156,7 @@ export default function DSAbstraction(options: Options) {
 
     DS.getPageInfo = () => {
         const hasPageInfo = DS.pageInfo && DS.sortingPagingValues && DS.sortingPagingValues.totalHits;
-        return hasPageInfo ? `${DS.pageInfo} of ${DS.sortingPagingValues.totalHits}` : '';
+         return hasPageInfo? `${DS.pageInfo} of ${DS.sortingPagingValues.totalHits}` : '';
     };
 
     DS.config = () => config;
