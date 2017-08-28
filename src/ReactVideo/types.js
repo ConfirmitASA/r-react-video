@@ -36,6 +36,10 @@ export type reactVideoConfig = {
     callBlockId: string,
     videosPerPage: string,
     pagination: 'continuous' | 'paging',
+    /**
+     * should the user have access to callblock and edit button
+    */
+    canEdit: boolean
 }
 
 export type State = {
@@ -45,7 +49,7 @@ export type State = {
     /**
      * defines what is shown ass SingleView component: react element (`view` option) or iframe with callblock
     */
-    mode: 'view' | 'edit',
+    singleViewMode: 'view' | 'edit',
     /**
      * current hitlist record viewed in SingleView mode
      */

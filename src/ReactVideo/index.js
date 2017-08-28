@@ -18,7 +18,7 @@ export default class ReactVideo extends Component<Props, State> {
     items: null,
     error: false,
     config: null,
-    mode: 'view',
+    singleViewMode: 'view',
     singleView: {
       link: ''
     },
@@ -41,6 +41,7 @@ export default class ReactVideo extends Component<Props, State> {
               aspect="16:9"
               onSelect={this.onSelect}
               items={items}
+              actionIcon={this.state.config.canEdit?this.actionIcon:null}
             />
             {this.renderNavigation()}
           </div>
@@ -75,7 +76,7 @@ export default class ReactVideo extends Component<Props, State> {
   }
 
   renderSingleView(){
-    const {singleViewVisible, singleView, singleViewDisablePrev, singleViewDisableNext, mode } = this.state;
+    const {singleViewVisible, singleView, singleViewDisablePrev, singleViewDisableNext, singleViewMode } = this.state;
     return singleViewVisible ? (
       <SingleView
         returnToGridAction={this.returnToGrid}
@@ -85,7 +86,7 @@ export default class ReactVideo extends Component<Props, State> {
         singleViewDisablePrev={singleViewDisablePrev}
         singleViewDisableNext={singleViewDisableNext}
       >
-        {mode==='edit' ? <iframe className="renderArea" src={singleView.link} /> : <SingleViewResponses data={singleView}/>}
+        {singleViewMode==='edit' ? <iframe className="renderArea" src={singleView.link} /> : <SingleViewResponses data={singleView}/>}
       </SingleView>
     ) : null
   }
@@ -121,7 +122,7 @@ export default class ReactVideo extends Component<Props, State> {
     return this.navigateItems('forward')
   }
 
-  navigateItems(direction:'forward'|'backward') {
+  navigateItems(direction:'forward'|'backward'):void {
     let items = this.state.items;
     const paginationType = this.state.config.pagination;
     let itemsLength = items.length - 1;
@@ -131,19 +132,19 @@ export default class ReactVideo extends Component<Props, State> {
     const loadItemFromPreviousPage = nextIndex < 0 && !this.DS.disablePrevButton;
     const loadItemFromNextPage = nextIndex > itemsLength && !this.DS.disableNextButton;
 
+    let promisedItems = Promise.resolve(items);
     // assign items to thenable promises if requested item is outside of data boundaries
     if (loadItemFromPreviousPage) {
-      items = this.DS.loadPreviousPage();
+      promisedItems = this.DS.loadPreviousPage();
     } else if (loadItemFromNextPage) {
-      items = paginationType !== 'continuous' ? this.DS.loadNextPage() : this.DS.loadMore();
+      promisedItems = paginationType !== 'continuous' ? this.DS.loadNextPage() : this.DS.loadMore();
     }
-    const itemsArePromised = !Array.isArray(items) && items.hasOwnProperty('then');
+/*     const itemsArePromised = !Array.isArray(items) && items.hasOwnProperty('then');
     if (!itemsArePromised) {
-      items = Promise.resolve(items);
+      promisedItems = Promise.resolve(items);
     }
-
-    const [singleViewDisablePrev, singleViewDisableNext] = this.checkSingleViewNavState(nextIndex);
-    items.then(() => {
+ */
+    promisedItems.then(() => {
       let singleViewData;
       this.setState(prevState => {
         const newItems = prevState.items;
@@ -158,8 +159,7 @@ export default class ReactVideo extends Component<Props, State> {
         }
 
         return {
-          singleViewDisablePrev,
-          singleViewDisableNext,
+          ...this.getSingleViewNavState(nextIndex),
           singleView: singleViewData,
           singleViewVisible: true
         }
@@ -173,7 +173,8 @@ export default class ReactVideo extends Component<Props, State> {
     this.setState({
       ...this.getSingleViewNavState(this.state.items.indexOf(item)),
       singleView: item,
-      singleViewVisible: true
+      singleViewVisible: true,
+      singleViewMode:'view'
     })
   };
 
@@ -194,10 +195,15 @@ export default class ReactVideo extends Component<Props, State> {
     }
   }
 
-
-  static actionIcon() {
+  actionIconClick = (item) => ()=>this.setState({
+    ...this.getSingleViewNavState(this.state.items.indexOf(item)),
+    singleView: item,
+    singleViewVisible: true,
+    singleViewMode:'edit'
+  })
+  actionIcon=(item)=>{
     return (
-      <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.actionIconClick(item)}>
         <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
       </svg>
     )
