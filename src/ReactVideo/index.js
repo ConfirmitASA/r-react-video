@@ -1,17 +1,13 @@
 //@flow
-import React from "react";
+import type {State,Props} from './types'
+
+import React, {Component} from "react";
 import ImageGrid from "../ImageGrid";
 import SingleView from "../SingleView";
 import DSAbstraction from '../DSAbstraction'
 import Navigation from './Navigation'
-
-export default class ReactVideo extends React.Component {
-  /**
-   * @param {Object} props
-   * @param {String} props.config - name of the config that maps question ids from data with the data types
-   * @param {Boolean} props.thumbsPlaceholder - display thumbs as image placeholders instead of media icons
-   *
-   * */
+import SingleViewResponses from '../SingleView/Responses'
+export default class ReactVideo extends Component<Props, State> {
   DS = DSAbstraction({
     config: this.props.config,
     thumbsPlaceholder: this.props.thumbsPlaceholder,
@@ -22,56 +18,31 @@ export default class ReactVideo extends React.Component {
     items: null,
     error: false,
     config: null,
-    mode: 'view'
+    mode: 'view',
     singleView: {
       link: ''
     },
     singleViewVisible: false,
-    disableSingleViewPrev: false,
-    disableSingleViewNext: false,
+    singleViewDisablePrev: false,
+    singleViewDisableNext: false,
   };
 
   translate = this.DS.i18n.bind(this.DS);
 
   render() {
-    const { items, singleViewVisible, singleView, error, disableSingleViewPrev, disableSingleViewNext } = this.state;
+    const { items, singleViewVisible, error} = this.state;
     let render = null;
     if (!error && Array.isArray(items) && items.length !== 0) {
-
-      const { loadPreviousPage, loadNextPage, loadMore, disableNextButton, disablePrevButton, getPageInfo } = this.DS;
-      const navigationProps = {
-        loadPreviousPage,
-        loadNextPage,
-        loadMore,
-        disableNextButton,
-        disablePrevButton,
-        pageInfo: getPageInfo(),
-        config: this.state.config,
-        translate: this.translate
-      }
-
       render = (
         <div className={`GridContainer ${!singleViewVisible ? 'GridView' : ''}`}>
-          {singleViewVisible && (
-            <SingleView
-              returnToGridAction={this.returnToGrid}
-              loadPreviousItem={this.loadPreviousItem}
-              loadNextItem={this.loadNextItem}
-              headerText={`Edit video "${singleView.title}"`}
-              disableSingleViewPrev={disableSingleViewPrev}
-              disableSingleViewNext={disableSingleViewNext}
-            >
-              <iframe className="renderArea" src={singleView.link} />
-            </SingleView>
-          )
-          }
+          { this.renderSingleView() }
           <div className="ImageGridContainer" style={{ display: !singleViewVisible ? 'block' : 'none' }}>
             <ImageGrid
               aspect="16:9"
               onSelect={this.onSelect}
               items={items}
             />
-            <Navigation {...navigationProps} />
+            {this.renderNavigation()}
           </div>
         </div>
       )
@@ -85,6 +56,38 @@ export default class ReactVideo extends React.Component {
       }
     }
     return render
+  }
+
+  renderNavigation(){
+    const { loadPreviousPage, loadNextPage, loadMore, disableNextButton, disablePrevButton, getPageInfo } = this.DS;
+    const navigationProps = {
+      loadPreviousPage,
+      loadNextPage,
+      loadMore,
+      disableNextButton,
+      disablePrevButton,
+      pageInfo: getPageInfo(),
+      config: this.state.config,
+      translate: this.translate
+    }
+
+    return <Navigation {...navigationProps} />
+  }
+
+  renderSingleView(){
+    const {singleViewVisible, singleView, singleViewDisablePrev, singleViewDisableNext, mode } = this.state;
+    return singleViewVisible ? (
+      <SingleView
+        returnToGridAction={this.returnToGrid}
+        loadPreviousItem={this.loadPreviousItem}
+        loadNextItem={this.loadNextItem}
+        headerText={`Edit video "${singleView.title}"`}
+        singleViewDisablePrev={singleViewDisablePrev}
+        singleViewDisableNext={singleViewDisableNext}
+      >
+        {mode==='edit' ? <iframe className="renderArea" src={singleView.link} /> : <SingleViewResponses data={singleView}/>}
+      </SingleView>
+    ) : null
   }
 
   dataLoadingMessage() {
@@ -118,7 +121,7 @@ export default class ReactVideo extends React.Component {
     return this.navigateItems('forward')
   }
 
-  navigateItems(direction) {
+  navigateItems(direction:'forward'|'backward') {
     let items = this.state.items;
     const paginationType = this.state.config.pagination;
     let itemsLength = items.length - 1;
