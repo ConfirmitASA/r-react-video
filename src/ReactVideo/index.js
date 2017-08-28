@@ -137,18 +137,18 @@ export default class ReactVideo extends Component<Props, State> {
     } else if (loadItemFromNextPage) {
       items = paginationType !== 'continuous' ? this.DS.loadNextPage() : this.DS.loadMore();
     }
-    const itemsArePromised = items.hasOwnProperty('then')
+    const itemsArePromised = !Array.isArray(items) && items.hasOwnProperty('then');
     if (!itemsArePromised) {
       items = Promise.resolve(items);
     }
 
-    const [disableSingleViewPrev, disableSingleViewNext] = this.checkSingleViewNavState(nextIndex);
+    const [singleViewDisablePrev, singleViewDisableNext] = this.checkSingleViewNavState(nextIndex);
     items.then(() => {
       let singleViewData;
       this.setState(prevState => {
         const newItems = prevState.items;
-        const atDataLeftBoundaryCanLoad = nextIndex < 0 && !disableSingleViewPrev;
-        const atDataRightBoundaryCanLoad = nextIndex > itemsLength && !disableSingleViewNext && paginationType !== 'continuous';
+        const atDataLeftBoundaryCanLoad = nextIndex < 0 && !singleViewDisablePrev;
+        const atDataRightBoundaryCanLoad = nextIndex > itemsLength && !singleViewDisableNext && paginationType !== 'continuous';
         if (atDataLeftBoundaryCanLoad) {
           singleViewData = newItems[newItems.length - 1]
         } else if (atDataRightBoundaryCanLoad) {
@@ -158,8 +158,8 @@ export default class ReactVideo extends Component<Props, State> {
         }
 
         return {
-          disableSingleViewNext,
-          disableSingleViewPrev,
+          singleViewDisablePrev,
+          singleViewDisableNext,
           singleView: singleViewData,
           singleViewVisible: true
         }
@@ -170,30 +170,28 @@ export default class ReactVideo extends Component<Props, State> {
   toggleSingleViewNavState(item) { }
 
   onSelect = (item) => {
-    const [disableSingleViewPrev, disableSingleViewNext] = this.checkSingleViewNavState(this.state.items.indexOf(item));
     this.setState({
-      disableSingleViewPrev,
-      disableSingleViewNext,
+      ...this.getSingleViewNavState(this.state.items.indexOf(item)),
       singleView: item,
       singleViewVisible: true
     })
   };
 
-  checkSingleViewNavState(currentItemIndex) {
+  getSingleViewNavState(currentItemIndex) {
     const items = this.state.items;
-    let disableSingleViewNext = false,
-      disableSingleViewPrev = false;
+    let singleViewDisableNext = false,
+    singleViewDisablePrev = false;
 
     if (currentItemIndex <= 0 && this.DS.disablePrevButton) {
-      disableSingleViewPrev = true;
+      singleViewDisablePrev = true;
     }
     if (currentItemIndex >= items.length - 1 && this.DS.disableNextButton) {
-      disableSingleViewNext = true;
+      singleViewDisableNext = true;
     }
-    return [
-      disableSingleViewPrev,
-      disableSingleViewNext
-    ]
+    return {
+      singleViewDisablePrev,
+      singleViewDisableNext
+    }
   }
 
 
