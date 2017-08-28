@@ -30,7 +30,7 @@ export default class ReactVideo extends Component<Props, State> {
   translate = this.DS.i18n.bind(this.DS);
 
   render() {
-    const { items, singleViewVisible, error} = this.state;
+    const { items, singleViewVisible, error, config} = this.state;
     let render = null;
     if (!error && Array.isArray(items) && items.length !== 0) {
       render = (
@@ -41,7 +41,7 @@ export default class ReactVideo extends Component<Props, State> {
               aspect="16:9"
               onSelect={this.onSelect}
               items={items}
-              actionIcon={this.state.config.canEdit?this.actionIcon:null}
+              actionIcon={config.canEdit?this.actionIcon:null}
             />
             {this.renderNavigation()}
           </div>
@@ -178,7 +178,7 @@ export default class ReactVideo extends Component<Props, State> {
     })
   };
 
-  getSingleViewNavState(currentItemIndex) {
+  getSingleViewNavState(currentItemIndex:number) {
     const items = this.state.items;
     let singleViewDisableNext = false,
     singleViewDisablePrev = false;

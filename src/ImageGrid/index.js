@@ -31,7 +31,7 @@ class ImageGrid extends PureComponent {
               placeholderSizing={item.image?placeholderSizing:'initial'}
               title={item.title}
               description={item.description}
-              actionIcon={typeof actionIcon==='function'?actionIcon(item):undeifined}
+              actionIcon={typeof actionIcon==='function'?actionIcon(item):null}
               onSelect={this.itemClickHandler(item)}
             />
           ))
