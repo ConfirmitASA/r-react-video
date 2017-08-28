@@ -82,7 +82,6 @@ export default class ReactVideo extends Component<Props, State> {
         returnToGridAction={this.returnToGrid}
         loadPreviousItem={this.loadPreviousItem}
         loadNextItem={this.loadNextItem}
-        headerText={`Edit video "${singleView.title}"`}
         singleViewDisablePrev={singleViewDisablePrev}
         singleViewDisableNext={singleViewDisableNext}
       >
