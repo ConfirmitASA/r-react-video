@@ -1,9 +1,7 @@
-/**
- * Created by IvanP on 11.01.2017.
- */
+//@flow
 import React from "react";
-import ImageGrid from "../ImageGrid/ImageGrid";
-import SingleView from "../SingleView/SingleView";
+import ImageGrid from "../ImageGrid";
+import SingleView from "../SingleView";
 import DSAbstraction from '../DSAbstraction'
 import Navigation from './Navigation'
 
@@ -24,6 +22,7 @@ export default class ReactVideo extends React.Component {
     items: null,
     error: false,
     config: null,
+    mode: 'view'
     singleView: {
       link: ''
     },
@@ -50,7 +49,6 @@ export default class ReactVideo extends React.Component {
         config: this.state.config,
         translate: this.translate
       }
-      console.log(navigationProps);
 
       render = (
         <div className={`GridContainer ${!singleViewVisible ? 'GridView' : ''}`}>
@@ -101,8 +99,6 @@ export default class ReactVideo extends React.Component {
     }
     return this.DS.i18n(message)
   }
-
-
 
   returnToGrid = () => {
     this.setState({

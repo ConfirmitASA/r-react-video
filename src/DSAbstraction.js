@@ -15,6 +15,16 @@ type Options = {
     component: any
 }
 
+type parsedDataRow = {
+    id: string | number,
+    title?: string,
+    description?: string,
+    placeholder?: string,
+    image?: string,
+    mediatype: 'video' | 'audio' | 'image',
+    link: string,
+}
+
 
 export default function DSAbstraction(options: Options) {
     const DS = new HitlistDS();
@@ -48,13 +58,13 @@ export default function DSAbstraction(options: Options) {
                 throw new Error('config is not passed from backend')
             }
             config = window[configName];
-            component.setState({config})
+            component.setState({ config })
         }
     }
 
     function processData(data, mode = 'replace') {
-        const newData = data.map((dataRow, rowIndex) => {
-            let parsedRow = {};
+        const newData: parsedDataRow[] = data.map((dataRow, rowIndex) => {
+            let parsedRow: parsedDataRow = {};
             ['id', 'title', 'description', 'image', 'audio', 'video', 'tags'].forEach(key => {
                 const columnID = config[key];
                 parsedRow[key] = prepareData(dataRow[columnID], key);
@@ -108,11 +118,11 @@ export default function DSAbstraction(options: Options) {
     /**
      * massage data to fit the type we expect to receive in react view
      * */
-    function prepareData(data, type: string) {
+    function prepareData(data:any, type: string) {
         switch (type) {
             case 'image':
                 let result = (/src='(.+?)'/gi).exec(data);
-                return result && result !== null && result[1] ? result[1] : undefined;
+                return result != null && result[1] ? result[1] : undefined;
             case 'description':
             case 'title':
             case 'video':
@@ -157,10 +167,10 @@ export default function DSAbstraction(options: Options) {
 
     DS.getPageInfo = () => {
         const hasPageInfo = DS.pageInfo && DS.sortingPagingValues && DS.sortingPagingValues.totalHits;
-         return hasPageInfo? `${DS.pageInfo} of ${DS.sortingPagingValues.totalHits}` : '';
+        return hasPageInfo ? `${DS.pageInfo} of ${DS.sortingPagingValues.totalHits}` : '';
     };
 
-    DS.config = () => {return config!=null? config : initialiseConfig(options.config)};
+    DS.config = () => { return config != null ? config : initialiseConfig(options.config) };
 
     return DS
 }

@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import mainCSS from './main.css';
-import ReactVideo from './ReactVideo/ReactVideo';
+import ReactVideo from './ReactVideo';
 import ReportalBase from 'r-reportal-base';
 
 /**
@@ -19,12 +19,13 @@ const launchVideoHitlist = (configName,thumbsPlaceholder=true) => {
   } else if(configName && typeof configName != 'string'){
     throw new TypeError(`config name must be a string, not a ${typeof configName}`)
   }
+
   window.addEventListener("DOMContentLoaded", ()=>{
     ReactDOM.render(
       <ReactVideo
       config={configName}
       thumbsPlaceholder={thumbsPlaceholder}
-      verbose={true}
+      verbose
       />,document.getElementById('root'))
   });
 };

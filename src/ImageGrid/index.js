@@ -1,5 +1,5 @@
 import React, {PropTypes, PureComponent} from 'react';
-import ImageGridTile from '../ImageGridTile/ImageGridTile';
+import ImageGridTile from '../ImageGridTile';
 
 
 /**
