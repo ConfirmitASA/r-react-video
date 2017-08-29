@@ -10,8 +10,8 @@ export type NavBarProps = {
     loadPreviousItem: () => void,
     loadNextItem: () => void,
     returnToGridAction: () => void,
-    disableSingleViewPrev: boolean,
-    disableSingleViewNext: boolean,
+    singleViewDisablePrev: boolean,
+    singleViewDisableNext: boolean,
 }
 export type Props =  NavBarProps & {
     /**
