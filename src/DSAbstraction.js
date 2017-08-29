@@ -23,6 +23,7 @@ type parsedDataRow = {
     image?: string,
     mediatype: 'video' | 'audio' | 'image',
     link: string,
+    [x:string]:string,
 }
 
 
@@ -58,6 +59,9 @@ export default function DSAbstraction(options: Options) {
                 throw new Error('config is not passed from backend')
             }
             config = window[configName];
+            if(config.individualRecords && typeof config.individualRecords === 'string'){
+                config.individualRecords = config.individualRecords.split(',').map(item=>item.trim());
+            }
             component.setState({ config })
         }
     }
@@ -65,9 +69,11 @@ export default function DSAbstraction(options: Options) {
     function processData(data, mode = 'replace') {
         const newData: parsedDataRow[] = data.map((dataRow, rowIndex) => {
             let parsedRow: parsedDataRow = {};
-            ['id', 'title', 'description', 'image', 'audio', 'video', 'tags'].forEach(key => {
+            const ir = config.individualRecords || [];
+            const dataFields = ['id', 'title', 'description', 'image', 'audio', 'video', 'tags'].concat(ir);
+            dataFields.forEach(key => {
                 const columnID = config[key];
-                parsedRow[key] = prepareData(dataRow[columnID], key);
+                parsedRow[key] = prepareData(dataRow[columnID || key], key);
                 // if image - we might want to use a placeholder as the thumb, and load the full image in background
                 if (key === 'image') {
                     if (parsedRow.image) {
@@ -78,7 +84,7 @@ export default function DSAbstraction(options: Options) {
                     }
                 }
                 // calculate mediatype or a placeholder icon
-                if (['video', 'audio', 'image'].indexOf(key) > -1 && config[key] && parsedRow[key]) {
+                if (!parsedRow.mediatype && ['video', 'audio', 'image'].indexOf(key) > -1 && config[key] && parsedRow[key]) {
                     parsedRow.mediatype = key
                 }
             });
@@ -130,6 +136,7 @@ export default function DSAbstraction(options: Options) {
                 return !(data.indexOf('-') > -1 && data.trim().length === 1) ? data.trim() : undefined;
             case 'tags':
                 return data && (data.indexOf(',') > -1 ? data.split(',') : data.indexOf('-') > -1 && data.trim().length === 1 ? undefined : data.trim());
+            default: return data;
         }
     }
 

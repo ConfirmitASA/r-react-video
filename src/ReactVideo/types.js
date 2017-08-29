@@ -34,12 +34,13 @@ export type reactVideoConfig = {
     description: string,
 
     callBlockId: string,
-    videosPerPage: string,
+    recordsPerPage: string,
     pagination: 'continuous' | 'paging',
     /**
      * should the user have access to callblock and edit button
     */
-    canEdit: boolean
+    canEdit: boolean,
+    individualRecords: string[],
 }
 
 export type State = {

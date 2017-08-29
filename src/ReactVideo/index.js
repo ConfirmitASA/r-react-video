@@ -1,7 +1,7 @@
 //@flow
-import type {State,Props} from './types'
+import type {State, Props } from './types'
 
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ImageGrid from "../ImageGrid";
 import SingleView from "../SingleView";
 import DSAbstraction from '../DSAbstraction'
@@ -30,18 +30,19 @@ export default class ReactVideo extends Component<Props, State> {
   translate = this.DS.i18n.bind(this.DS);
 
   render() {
-    const { items, singleViewVisible, error, config} = this.state;
+    const { items, singleViewVisible, error, config } = this.state;
     let render = null;
+    console.log(this.DS);
     if (!error && Array.isArray(items) && items.length !== 0) {
       render = (
         <div className={`GridContainer ${!singleViewVisible ? 'GridView' : ''}`}>
-          { this.renderSingleView() }
+          {this.renderSingleView()}
           <div className="ImageGridContainer" style={{ display: !singleViewVisible ? 'block' : 'none' }}>
             <ImageGrid
               aspect="16:9"
               onSelect={this.onSelect}
               items={items}
-              actionIcon={config.canEdit?this.actionIcon:null}
+              actionIcon={config.canEdit ? this.actionIcon : null}
             />
             {this.renderNavigation()}
           </div>
@@ -59,7 +60,7 @@ export default class ReactVideo extends Component<Props, State> {
     return render
   }
 
-  renderNavigation(){
+  renderNavigation() {
     const { loadPreviousPage, loadNextPage, loadMore, disableNextButton, disablePrevButton, getPageInfo } = this.DS;
     const navigationProps = {
       loadPreviousPage,
@@ -75,8 +76,8 @@ export default class ReactVideo extends Component<Props, State> {
     return <Navigation {...navigationProps} />
   }
 
-  renderSingleView(){
-    const {singleViewVisible, singleView, singleViewDisablePrev, singleViewDisableNext, singleViewMode } = this.state;
+  renderSingleView() {
+    const { singleViewVisible, singleView, singleViewDisablePrev, singleViewDisableNext, singleViewMode } = this.state;
     return singleViewVisible ? (
       <SingleView
         returnToGridAction={this.returnToGrid}
@@ -85,9 +86,27 @@ export default class ReactVideo extends Component<Props, State> {
         singleViewDisablePrev={singleViewDisablePrev}
         singleViewDisableNext={singleViewDisableNext}
       >
-        {singleViewMode==='edit' ? <iframe className="renderArea" src={singleView.link} /> : <SingleViewResponses data={singleView}/>}
+        {singleViewMode === 'edit' ? <iframe className="renderArea" src={singleView.link} /> : <SingleViewResponses data={singleView} columns={this.individualRecordsQuestionIds} columnsMap={this.individualRecordsKeyLabels} />}
       </SingleView>
     ) : null
+  }
+
+  get individualRecordsQuestionIds() {
+    const { individualRecords } = this.DS.config();
+    return individualRecords != null && Array.isArray(individualRecords) ? individualRecords : []
+  }
+
+  get individualRecordsKeyLabels() {
+    const config = this.DS.config();
+    const irIds = this.individualRecordsQuestionIds;
+    const map = {};
+    ['title', 'description', 'image', 'audio', 'video'].reverse().forEach(key=>map[key]=this.DS.allColumns.filter(record => record.key===config[key])[0].label)
+    this.DS.allColumns.forEach(column => {
+      if (irIds.indexOf(column.key) > -1) {
+        map[column.key] = column.label
+      }
+    })
+    return map
   }
 
   dataLoadingMessage() {
@@ -121,12 +140,12 @@ export default class ReactVideo extends Component<Props, State> {
     return this.navigateItems('forward')
   }
 
-  navigateItems(direction:'forward'|'backward'):void {
+  navigateItems(direction: 'forward' | 'backward'): void {
     let items = this.state.items;
     const paginationType = this.state.config.pagination;
     let itemsLength = items.length - 1;
     const currentSingleViewItemIndex = items.indexOf(this.state.singleView);
-    const nextIndex = direction === 'forward' ? currentSingleViewItemIndex+1 : currentSingleViewItemIndex-1;
+    const nextIndex = direction === 'forward' ? currentSingleViewItemIndex + 1 : currentSingleViewItemIndex - 1;
 
     const loadItemFromPreviousPage = nextIndex < 0 && !this.DS.disablePrevButton;
     const loadItemFromNextPage = nextIndex > itemsLength && !this.DS.disableNextButton;
@@ -138,11 +157,11 @@ export default class ReactVideo extends Component<Props, State> {
     } else if (loadItemFromNextPage) {
       promisedItems = paginationType !== 'continuous' ? this.DS.loadNextPage() : this.DS.loadMore();
     }
-/*     const itemsArePromised = !Array.isArray(items) && items.hasOwnProperty('then');
-    if (!itemsArePromised) {
-      promisedItems = Promise.resolve(items);
-    }
- */
+    /*     const itemsArePromised = !Array.isArray(items) && items.hasOwnProperty('then');
+        if (!itemsArePromised) {
+          promisedItems = Promise.resolve(items);
+        }
+     */
     promisedItems.then(() => {
       let singleViewData;
       this.setState(prevState => {
@@ -173,14 +192,14 @@ export default class ReactVideo extends Component<Props, State> {
       ...this.getSingleViewNavState(this.state.items.indexOf(item)),
       singleView: item,
       singleViewVisible: true,
-      singleViewMode:'view'
+      singleViewMode: 'view'
     })
   };
 
-  getSingleViewNavState(currentItemIndex:number) {
+  getSingleViewNavState(currentItemIndex: number) {
     const items = this.state.items;
     let singleViewDisableNext = false,
-    singleViewDisablePrev = false;
+      singleViewDisablePrev = false;
 
     if (currentItemIndex <= 0 && this.DS.disablePrevButton) {
       singleViewDisablePrev = true;
@@ -194,13 +213,13 @@ export default class ReactVideo extends Component<Props, State> {
     }
   }
 
-  actionIconClick = (item) => ()=>this.setState({
+  actionIconClick = (item) => () => this.setState({
     ...this.getSingleViewNavState(this.state.items.indexOf(item)),
     singleView: item,
     singleViewVisible: true,
-    singleViewMode:'edit'
+    singleViewMode: 'edit'
   })
-  actionIcon=(item)=>{
+  actionIcon = (item) => {
     return (
       <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.actionIconClick(item)}>
         <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
