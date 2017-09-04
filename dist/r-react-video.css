@@ -65,6 +65,89 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+.ImageGridTile{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 4px;
+  font-family: Roboto, sans-serif;
+  min-width: 168px;
+  max-width: 336px;
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:column;
+      -ms-flex-direction:column;
+          flex-direction:column;
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+      -ms-flex:1;
+          flex:1
+}
+.ImageGridTile--cover,
+  .ImageGridTile--title,
+  .ImageGridTile--action-icon {
+  cursor: pointer
+}
+.ImageGridTile--action-icon {
+  min-width: 48px;
+  padding: 8px
+}
+.ImageGridTile--content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  padding: 8px 0
+}
+.ImageGridTile--meta {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column
+}
+.ImageGridTile--title {
+  font-size: 15px;
+  line-height: normal;
+  font-weight: 500;
+  -webkit-transition: color 0.25s ease-in-out ;
+  -o-transition: color 0.25s ease-in-out ;
+  transition: color 0.25s ease-in-out 
+}
+.ImageGridTile:hover .ImageGridTile--title {
+  color: #03a9f4
+}
+.ImageGridTile--description {
+  font-size: 12px;
+  line-height: normal
+}
+.ImageGridTile .ellipsis {
+  max-height: 2.6em;
+  display: block;
+  line-height: 1.3em;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word
+}
 .SingleView {
   position: absolute;
   top: 0;
@@ -211,89 +294,6 @@
 }
 .materialButton.flat:hover {
   background-color: rgba(0, 0, 0, .12)
-}
-.ImageGridTile{
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 4px;
-  font-family: Roboto, sans-serif;
-  min-width: 168px;
-  max-width: 336px;
-  display:-webkit-box;
-  display:-webkit-flex;
-  display:-ms-flexbox;
-  display:flex;
-  -webkit-box-orient:vertical;
-  -webkit-box-direction:normal;
-  -webkit-flex-direction:column;
-      -ms-flex-direction:column;
-          flex-direction:column;
-  -webkit-box-flex:1;
-  -webkit-flex:1;
-      -ms-flex:1;
-          flex:1
-}
-.ImageGridTile--cover,
-  .ImageGridTile--title,
-  .ImageGridTile--action-icon{
-  cursor: pointer
-}
-.ImageGridTile--action-icon{
-  min-width: 48px;
-  padding: 8px
-}
-.ImageGridTile--content{
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  padding: 8px 0
-}
-.ImageGridTile--meta{
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column
-}
-.ImageGridTile--title{
-  font-size: 15px;
-  line-height: normal;
-  font-weight: 500;
-  -webkit-transition: color 0.25s ease-in-out ;
-  -o-transition: color 0.25s ease-in-out ;
-  transition: color 0.25s ease-in-out 
-}
-.ImageGridTile:hover .ImageGridTile--title{
-  color: #03a9f4
-}
-.ImageGridTile--description{
-  font-size: 12px;
-  line-height: normal
-}
-.ImageGridTile .ellipsis{
-  max-height: 2.6em;
-  display: block;
-  line-height: 1.3em;
-  overflow: hidden;
-  position: relative;
-  text-overflow: ellipsis;
-  white-space: normal;
-  word-wrap: break-word
 }
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyLXJlYWN0LXZpZGVvLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/

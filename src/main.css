@@ -1,6 +1,7 @@
 @import "variables.css";
 @import "../node_modules/ProportionalImage/src/main.css";
 @import "ImageGrid/ImageGrid.css";
+@import "ImageGridTile/ImageGridTile.css";
 @import "SingleView/SingleView.css";
 
 .GridContainer.GridView{

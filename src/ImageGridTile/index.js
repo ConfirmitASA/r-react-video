@@ -1,5 +1,4 @@
 import React, {PropTypes, PureComponent} from 'react';
-import ImageGridTileStyle from './ImageGridTile.css';
 import Img from 'ProportionalImage';
 
 const MEDIA_TYPES = ['image', 'audio', 'video'];
