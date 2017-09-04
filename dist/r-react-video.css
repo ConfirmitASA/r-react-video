@@ -242,7 +242,8 @@
   font-size: 14px !important;
   font-size: 14px !important;
   color: rgba(0, 0, 0, .83) !important;
-  margin-bottom: 16px
+  margin-bottom: 16px;
+  font-weight: 500
 }
 .Responses--pageTitle {
   font-size: 24px !important;
