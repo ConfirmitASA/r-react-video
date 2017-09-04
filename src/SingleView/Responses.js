@@ -33,20 +33,17 @@ export default class Responses extends PureComponent {
     }
 
     get _imageRenderer() {
-        const { data } = this.props;
-        return (<img className="Responses--media" src={data.image} />)
+        return <img className="Responses--media" src={this.props.data.image} />
     }
     get _videoRenderer() {
-        const { data } = this.props;
         return (
             <video controls className="Responses--media">
-                <source src={data.video} type="video/mp4" />
+                <source src={this.props.data.video} type="video/mp4" />
                 Your browser does not support the video tag.
           </video>
         )
     }
     get _audioRenderer() {
-        const { data, columnsMap } = this.props;
-        return <audio src={data.audio} type="audio/mp4" controls className="Responses--media" />
+        return <audio src={this.props.data.audio} type="audio/mp4" controls className="Responses--media" />
     }
 }
