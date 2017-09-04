@@ -250,8 +250,7 @@
   color: rgba(0, 0, 0, .83) !important
 }
 .Responses--media {
-  width: 100% !important;
-  height: auto !important
+  width: 100% !important
 }
 .GridContainer.GridView{
   margin: 0 auto;
