@@ -85,4 +85,9 @@
     font-weight: bold;
     color: rgba(0,0,0,.83) !important;
   }
+  &--media{
+    width:100% !important;
+    height:auto !important;
+  }
+
 }

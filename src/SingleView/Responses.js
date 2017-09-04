@@ -8,9 +8,9 @@ export default class Responses extends PureComponent {
         return (
             <div className="renderArea Responses">
                 <div className="Responses--wrapper">
-                    {data.title && <div className="Responses--pageTitle"> {data[columnsMap.title]} </div>}
+                    {data.title && <div className="Responses--pageTitle"> {data.title} </div>}
                     {!!date && <div className="Responses--label"> {date} </div>}
-                    {data.description && <div className="Responses--value"> {data[columnsMap.description]} </div>}
+                    {data.description && <div className="Responses--value"> {data.description} </div>}
                     {media.map(mediaItem => {
                         return data[mediaItem] ? (
                             <div className="row">
@@ -34,12 +34,12 @@ export default class Responses extends PureComponent {
 
     get _imageRenderer() {
         const { data } = this.props;
-        return (<img width="100%" height="auto" src={data.image} />)
+        return (<img className="Responses--media" src={data.image} />)
     }
     get _videoRenderer() {
         const { data } = this.props;
         return (
-            <video controls style={{ width: '100% !important', height: 'auto !important' }}>
+            <video controls className="Responses--media">
                 <source src={data.video} type="video/mp4" />
                 Your browser does not support the video tag.
           </video>
@@ -47,6 +47,6 @@ export default class Responses extends PureComponent {
     }
     get _audioRenderer() {
         const { data, columnsMap } = this.props;
-        return <audio src={data.audio} type="audio/mp4" controls style={{ width: '100% !important', height: 'auto !important' }}></audio>
+        return <audio src={data.audio} type="audio/mp4" controls className="Responses--media" />
     }
 }

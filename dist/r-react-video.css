@@ -212,6 +212,7 @@
 }
 .Responses{
   overflow-y: scroll
+
 }
 .Responses--wrapper {
   margin: 0 auto;
@@ -247,6 +248,10 @@
   font-size: 24px !important;
   font-weight: bold;
   color: rgba(0, 0, 0, .83) !important
+}
+.Responses--media {
+  width: 100% !important;
+  height: auto !important
 }
 .GridContainer.GridView{
   margin: 0 auto;
