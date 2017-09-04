@@ -100,7 +100,8 @@
   -webkit-box-flex: 0;
   -webkit-flex: none;
       -ms-flex: none;
-          flex: none
+          flex: none;
+  border-radius: 50%
 }
 .ImageGridTile--content {
   display: -webkit-box;
@@ -189,7 +190,8 @@
   padding: 12px;
   cursor: pointer;
   display: inline-block;
-  vertical-align: inherit
+  vertical-align: inherit;
+  border-radius: 50%
 }
 .SingleView--nav-button > svg {
   opacity: .87;

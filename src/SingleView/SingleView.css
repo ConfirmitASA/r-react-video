@@ -28,6 +28,7 @@
     cursor: pointer;
     display: inline-block;
     vertical-align: inherit;
+    border-radius:50%;
 
     & > svg {
       opacity: .87;

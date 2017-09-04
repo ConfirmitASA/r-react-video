@@ -27,6 +27,7 @@
     opacity:0.53;
     font-size:1px;
     flex:none;
+    border-radius: 50%;
   }
 
   &--content{

@@ -101,10 +101,10 @@ export default class ReactVideo extends Component<Props, State> {
   }
 
   get individualRecordsKeyLabels() {
-    return {...this.getLabelsForMainFields(), ...this.getLabelsForIndividualRecords()}
+    return { ...this.getLabelsForMainFields(), ...this.getLabelsForIndividualRecords() }
   }
 
-  getLabelsForMainFields(){
+  getLabelsForMainFields() {
     const config = this.DS.config();
     const map = {};
     ['title', 'description', 'image', 'audio', 'video'].reverse().forEach(key =>
@@ -113,9 +113,9 @@ export default class ReactVideo extends Component<Props, State> {
       )[0].label
     )
     return map;
-  } 
+  }
 
-  getLabelsForIndividualRecords(){
+  getLabelsForIndividualRecords() {
     const map = {};
     const irIds = this.individualRecordsQuestionIds;
     this.DS.allColumns.forEach(column => {
@@ -124,7 +124,7 @@ export default class ReactVideo extends Component<Props, State> {
       }
     })
     return map;
-  } 
+  }
 
 
 
@@ -185,8 +185,8 @@ export default class ReactVideo extends Component<Props, State> {
       let singleViewData;
       this.setState(prevState => {
         const newItems = prevState.items;
-        const atDataLeftBoundaryCanLoad = nextIndex < 0 && !singleViewDisablePrev;
-        const atDataRightBoundaryCanLoad = nextIndex > itemsLength && !singleViewDisableNext && paginationType !== 'continuous';
+        const atDataLeftBoundaryCanLoad = nextIndex < 0 && !prevState.singleViewDisablePrev;
+        const atDataRightBoundaryCanLoad = nextIndex > itemsLength && !prevState.singleViewDisableNext && paginationType !== 'continuous';
         if (atDataLeftBoundaryCanLoad) {
           singleViewData = newItems[newItems.length - 1]
         } else if (atDataRightBoundaryCanLoad) {
@@ -240,9 +240,9 @@ export default class ReactVideo extends Component<Props, State> {
   })
   actionIcon = (item) => {
     return (
-      <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.actionIconClick(item)}>
-        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-      </svg>
+        <svg className="icon" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.actionIconClick(item)}>
+          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+        </svg>
     )
   }
 }
