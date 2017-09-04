@@ -23,11 +23,13 @@ class ImageGridTile extends PureComponent{
 
   render() {
     let actionButton = null;
-    const {actionIcon,onSelect,aspect,title,placeholderSizing,image,description}=this.props;
+    const {actionIcon,actionIconClick,onSelect,aspect,title,placeholderSizing,image,description}=this.props;
     if (this.props.actionIcon) {
-      actionButton = <div className="ImageGridTile--edit">
-        <div className="ImageGridTile--action-icon ripple">{actionIcon}</div>
-      </div>;
+      actionButton = (
+        <div className="ImageGridTile--edit">
+        <div className="ImageGridTile--action-icon ripple" onClick={actionIconClick}>{actionIcon}</div>
+      </div>)
+      ;
     }
     return (
       <div className="ImageGridTile">

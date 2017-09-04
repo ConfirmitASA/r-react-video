@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 export default class Navigation extends PureComponent {
     render() {
         const { config } = this.props;
-        console.log(config)
         if (config) {
             const pagination = config.pagination;
             if (pagination === 'continuous') {

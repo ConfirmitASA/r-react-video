@@ -15,7 +15,7 @@ import ImageGridTile from '../ImageGridTile';
 class ImageGrid extends PureComponent {
 
   itemClickHandler = (item) => (event) => this.props.onSelect(item);
-
+  editItem = item=> this.props.actionIconClick(item)
   render() {
     const {items, dummyItems, aspect, placeholderSizing, actionIcon} = this.props;
     return (
@@ -32,6 +32,7 @@ class ImageGrid extends PureComponent {
               title={item.title}
               description={item.description}
               actionIcon={typeof actionIcon==='function'?actionIcon(item):null}
+              actionIconClick={this.editItem(item)}
               onSelect={this.itemClickHandler(item)}
             />
           ))
@@ -55,6 +56,7 @@ ImageGrid.propTypes = {
   items: PropTypes.array,
   aspect: PropTypes.string,
   actionIcon: PropTypes.element,
+  actionIconClick: PropTypes.func,
   placeholderSizing: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
   dummyItems: PropTypes.number
