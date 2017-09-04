@@ -36,7 +36,7 @@ export default class Responses extends PureComponent {
         return <img className="Responses--media" src={this.props.data.image} />
     }
     get _videoRenderer() {
-        const data = this.props.data.video
+        const data = this.props.data.video;
         return (
             <video key={data} controls className="Responses--media">
                 <source src={data} type="video/mp4" />
@@ -45,7 +45,7 @@ export default class Responses extends PureComponent {
         )
     }
     get _audioRenderer() {
-        const data = this.props.data.video
+        const data = this.props.data.audio;
         return <audio key={data} src={data} type="audio/mp4" controls className="Responses--media" />
     }
 }
