@@ -232,10 +232,12 @@
           align-items: stretch
 }
 .SingleView .renderArea .Responses--label {
-  font: 13px rgba(0, 0, 0, .53)
+  font-size: 13px !important;
+  color: rgba(0, 0, 0, .53) !important
 }
 .SingleView .renderArea .Responses--value {
-  font: 14px rgba(0, 0, 0, .83)
+  font-size: 14px !important;
+  color: rgba(0, 0, 0, .83) !important
 }
 .GridContainer.GridView{
   margin: 0 auto;
