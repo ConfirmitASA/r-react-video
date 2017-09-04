@@ -3,35 +3,35 @@ import React, { PureComponent } from 'react'
 export default class Responses extends PureComponent {
     render() {
         const { data, columns, columnsMap } = this.props
-        const mainColumns = ['title', 'description', 'image', 'audio', 'video'];
+        const media = ['image', 'video', 'audio'];
+        const date = data.interview_start || data.interview_end;
         return (
             <div className="renderArea Responses">
-                <div class="Responses--wrapper">
-                    {mainColumns != null && mainColumns.map(qID => {
-                        return data[qID] ? (<div className="row">
-                            <div className="Responses--label">{columnsMap[qID]}</div>
-                            <div className="Responses--value">{this[`_${qID}Renderer`]}</div>
-                        </div>) : null
+                <div className="Responses--wrapper">
+                    {data.title && <div className="Responses--pageTitle"> {data[columnsMap.title]} </div>}
+                    {!!date && <div className="Responses--label"> {date} </div>}
+                    {data.description && <div className="Responses--value"> {data[columnsMap.description]} </div>}
+                    {media.map(mediaItem => {
+                        return data[mediaItem] ? (
+                            <div className="row">
+                                <div className="Responses--label">{columnsMap[mediaItem]}</div>
+                                <div className="Responses--value">{this[`_${mediaItem}Renderer`]}</div>
+                            </div>
+                        ) : null
                     })}
                     {columns != null && columns.map(qID => {
-                        return data[qID] ? (<div className="row">
-                            <div className="label">{columnsMap[qID]}</div>
-                            <div className="value">{data[qID]}</div>
-                        </div>) : null
+                        return data[qID] ? (
+                            <div className="row">
+                                <div className="Responses--label">{columnsMap[qID]}</div>
+                                <div className="Responses--value">{data[qID]}</div>
+                            </div>
+                        ) : null
                     })}
                 </div>
             </div>
         )
     }
 
-    get _titleRenderer() {
-        const { data } = this.props;
-        return data.title
-    }
-    get _descriptionRenderer() {
-        const { data } = this.props;
-        return data.description
-    }
     get _imageRenderer() {
         const { data } = this.props;
         return (<img width="100%" height="auto" src={data.image} />)

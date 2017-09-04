@@ -53,28 +53,36 @@
     border: 0;
     background: transparent;
     height: calc(100% - var(--SingleView-header-height, 48px));
+  }
 
-    & .Responses{
-      overflow-y: scroll;
+}
 
-      &--wrapper{
-        margin:0 auto;
-        max-width:60em;
-        min-width:100%;
-        min-width: 240px;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-      }
-      &--label{
-        font-size: 13px !important;
-        color: rgba(0,0,0,.53) !important;
-      }
-      &--value{
-        font-size: 14px !important;
-        color: rgba(0,0,0,.83) !important;
-      }
+.Responses{
+  overflow-y: scroll;
 
-    }
+  &--wrapper{
+    margin:0 auto;
+    max-width:60em;
+    min-width:100%;
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  &--label{
+    font-size: 13px !important;
+    color: rgba(0,0,0,.53) !important;
+    margin-bottom: 8px;
+  }
+  &--value{
+    font-size: 14px !important;
+    font-size: 14px !important;
+    color: rgba(0,0,0,.83) !important;
+    margin-bottom: 16px;
+  }
+  &--pageTitle{
+    font-size: 24px !important;
+    font-weight: bold;
+    color: rgba(0,0,0,.83) !important;
   }
 }
