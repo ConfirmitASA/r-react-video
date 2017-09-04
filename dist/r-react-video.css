@@ -1,2 +1,363 @@
-.ProportionalImage{display:inline-block;overflow:hidden;position:relative}.ProportionalImage.hidden,.ProportionalImage .hidden{display:none}.ProportionalImage>.sizedImgDiv{position:absolute;top:0;right:0;bottom:0;left:0;display:none;background-color:#f0f2f5}.ProportionalImage>img{display:block;width:auto;height:auto}.ProportionalImage>.imagePlaceholder{position:absolute;top:0;right:0;bottom:0;left:0;opacity:1;background-color:#f0f2f5}.ProportionalImage>.imagePlaceholder.faded-out{transition:opacity .5s linear;opacity:0}.ImageGrid{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-flex:1;-ms-flex:1;flex:1;padding:24px 32px 0}.ImageGridContainer{position:absolute;top:0;right:0;bottom:0;left:0;overflow-x:hidden;overflow-y:auto}.ImageGridTile{box-sizing:border-box;padding:4px;font-family:Roboto,sans-serif;min-width:168px;max-width:336px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-flex:1;-ms-flex:1;flex:1}.ImageGridTile--action-icon,.ImageGridTile--cover,.ImageGridTile--title{cursor:pointer}.ImageGridTile--action-icon{padding:8px;margin-top:-8px;opacity:.53;font-size:1px;-webkit-box-flex:0;-ms-flex:none;flex:none;border-radius:50%}.ImageGridTile--content{-webkit-box-orient:horizontal;-ms-flex-direction:row;flex-direction:row;padding:8px 0}.ImageGridTile--content,.ImageGridTile--meta{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-direction:normal}.ImageGridTile--meta{-webkit-box-flex:1;-ms-flex:1;flex:1;-webkit-box-orient:vertical;-ms-flex-direction:column;flex-direction:column}.ImageGridTile--title{font-size:15px;line-height:normal;font-weight:500;transition:color .25s ease-in-out}.ImageGridTile:hover .ImageGridTile--title{color:#03a9f4}.ImageGridTile--description{font-size:12px;line-height:normal}.ImageGridTile .ellipsis{max-height:2.6em;display:block;line-height:1.3em;overflow:hidden;position:relative;text-overflow:ellipsis;white-space:normal;word-wrap:break-word}.SingleView{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden}.SingleView--header{display:-webkit-box;display:-ms-flexbox;display:flex;height:48px;vertical-align:middle;font-size:18px;font-weight:500;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin:0 8px}.SingleView--nav-button{width:48px;height:48px;padding:12px;cursor:pointer;display:inline-block;vertical-align:inherit;border-radius:50%}.SingleView--nav-button>svg{opacity:.87;transition:fill .25s ease-in-out}.SingleView--nav-button:hover>svg{fill:#03a9f4}.SingleView--nav-button[disabled]{pointer-events:none}.SingleView--nav-button[disabled]>svg{opacity:.25}.SingleView--nav-button[disabled]:hover>svg{fill:inherit}.SingleView .renderArea{width:100%;border:0;background:transparent;height:calc(100% - 48px)}.Responses{overflow-y:scroll}.Responses--wrapper{margin:0 auto;max-width:60em;min-width:100%;min-width:240px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch}.Responses--label{font-size:13px!important;color:rgba(0,0,0,.53)!important;margin-bottom:8px}.Responses--value{font-size:14px!important;color:rgba(0,0,0,.83)!important;margin-bottom:16px;font-weight:500}.Responses--pageTitle{font-size:24px!important;font-weight:700;color:rgba(0,0,0,.83)!important}.Responses--media{width:100%!important}.GridContainer.GridView{margin:0 auto}.GridContainer{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden}.buttonRow{padding:0 32px 16px}.materialButton{display:inline;cursor:pointer;border-radius:2px;min-width:56px;text-align:center;padding:8px 16px;font-weight:500;text-transform:uppercase;white-space:nowrap;margin:4px!important;transition:box-shadow .28s cubic-bezier(.4,0,.2,1);transition-property:color,box-shadow}.materialButton[disabled]{pointer-events:none;background-color:rgba(0,0,0,.12)!important;color:rgba(0,0,0,.32)!important}.materialButton.accent{background-color:#42bd41;color:#fff}.materialButton.accent:hover{background-color:#43a442;box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.2)}.materialButton.flat{background-color:transparent;color:rgba(18,24,33,.87)}.materialButton.flat:hover{background-color:rgba(0,0,0,.12)}.ripple{position:relative;overflow:hidden;-webkit-transform:translateZ(0);transform:translateZ(0)}.ripple:after{content:"";display:block;position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;background-image:radial-gradient(circle,#000 10%,transparent 10.01%);background-repeat:no-repeat;background-position:50%;-webkit-transform:scale(10);transform:scale(10);opacity:0;transition:opacity 1s,-webkit-transform .5s;transition:transform .5s,opacity 1s;transition:transform .5s,opacity 1s,-webkit-transform .5s}.ripple:active:after{-webkit-transform:scale(0);transform:scale(0);opacity:.2;transition:0s}
-/*# sourceMappingURL=r-react-video.css.map*/
+.ProportionalImage {
+  display: inline-block;
+  overflow: hidden;
+  position: relative
+}
+.ProportionalImage.hidden,
+  .ProportionalImage .hidden {
+  display: none
+}
+.ProportionalImage>.sizedImgDiv {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  background-color: #f0f2f5
+}
+.ProportionalImage>img {
+  display: block;
+  width: auto;
+  height: auto
+}
+.ProportionalImage>.imagePlaceholder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #f0f2f5;
+  opacity: 1;
+  background-color: #f0f2f5
+}
+.ProportionalImage>.imagePlaceholder.faded-out {
+  -webkit-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+  opacity: 0
+}
+.ImageGrid{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+      -ms-flex:1;
+          flex:1;
+  padding:24px 32px 0;
+}
+.ImageGridContainer{
+  position:absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.ImageGridTile{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 4px;
+  font-family: Roboto, sans-serif;
+  min-width: 168px;
+  max-width: 336px;
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:column;
+      -ms-flex-direction:column;
+          flex-direction:column;
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+      -ms-flex:1;
+          flex:1
+}
+.ImageGridTile--cover,
+  .ImageGridTile--title,
+  .ImageGridTile--action-icon {
+  cursor: pointer
+}
+.ImageGridTile--action-icon {
+  padding: 8px;
+  margin-top: -8px;
+  opacity: 0.53;
+  font-size: 1px;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  border-radius: 50%
+}
+.ImageGridTile--content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  padding: 8px 0
+}
+.ImageGridTile--meta {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column
+}
+.ImageGridTile--title {
+  font-size: 15px;
+  line-height: normal;
+  font-weight: 500;
+  -webkit-transition: color 0.25s ease-in-out ;
+  -o-transition: color 0.25s ease-in-out ;
+  transition: color 0.25s ease-in-out 
+}
+.ImageGridTile:hover .ImageGridTile--title {
+  color: #03a9f4
+}
+.ImageGridTile--description {
+  font-size: 12px;
+  line-height: normal
+}
+.ImageGridTile .ellipsis {
+  max-height: 2.6em;
+  display: block;
+  line-height: 1.3em;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word
+}
+.SingleView {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden
+
+}
+.SingleView--header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 48px;
+  vertical-align: middle;
+  font-size: 18px;
+  font-weight: 500;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0 8px
+}
+.SingleView--nav-button {
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: inherit;
+  border-radius: 50%
+}
+.SingleView--nav-button > svg {
+  opacity: .87;
+  -webkit-transition: fill 0.25s ease-in-out;
+  -o-transition: fill 0.25s ease-in-out;
+  transition: fill 0.25s ease-in-out
+}
+.SingleView--nav-button:hover > svg {
+  fill: #03a9f4
+}
+.SingleView--nav-button[disabled] {
+  pointer-events: none
+}
+.SingleView--nav-button[disabled] > svg {
+  opacity: .25
+}
+.SingleView--nav-button[disabled]:hover > svg {
+  fill: inherit
+}
+.SingleView .renderArea {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  height: calc(100% - 48px);
+  height: calc(100% - 48px)
+}
+.Responses{
+  overflow-y: scroll
+
+}
+.Responses--wrapper {
+  margin: 0 auto;
+  max-width: 60em;
+  min-width: 100%;
+  min-width: 240px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch
+}
+.Responses--label {
+  font-size: 13px !important;
+  color: rgba(0, 0, 0, .53) !important;
+  margin-bottom: 8px
+}
+.Responses--value {
+  font-size: 14px !important;
+  font-size: 14px !important;
+  color: rgba(0, 0, 0, .83) !important;
+  margin-bottom: 16px;
+  font-weight: 500
+}
+.Responses--pageTitle {
+  font-size: 24px !important;
+  font-weight: bold;
+  color: rgba(0, 0, 0, .83) !important
+}
+.Responses--media {
+  width: 100% !important
+}
+.GridContainer.GridView{
+  margin: 0 auto;
+}
+.GridContainer{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  overflow:hidden;
+}
+.buttonRow{
+  padding: 0 32px 16px ;
+}
+.materialButton{
+  display: inline;
+  cursor:pointer;
+  border-radius: 2px;
+  min-width: 56px;
+  text-align: center;
+  padding: 8px 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 4px!important;
+  -webkit-transition: -webkit-box-shadow .28s cubic-bezier(.4,0,.2,1);
+  transition: -webkit-box-shadow .28s cubic-bezier(.4,0,.2,1);
+  -o-transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
+  transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
+  transition: box-shadow .28s cubic-bezier(.4,0,.2,1), -webkit-box-shadow .28s cubic-bezier(.4,0,.2,1);
+  -webkit-transition-property: color,-webkit-box-shadow;
+  transition-property: color,-webkit-box-shadow;
+  -o-transition-property: color,box-shadow;
+  transition-property: color,box-shadow;
+  transition-property: color,box-shadow,-webkit-box-shadow
+}
+.materialButton[disabled] {
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, .12) !important;
+  color: rgba(0, 0, 0, .32) !important
+}
+.materialButton.accent {
+  background-color: #42bd41;
+  color: #FFF
+}
+.materialButton.accent:hover {
+  background-color: #43a442;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .2);
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .2)
+}
+.materialButton.flat {
+  background-color: rgba(0, 0, 0, 0);
+  color: rgba(18, 24, 33, .87)
+}
+.materialButton.flat:hover {
+  background-color: rgba(0, 0, 0, .12)
+}
+.ripple {
+  position: relative;
+  overflow: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0)
+}
+.ripple:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: -webkit-radial-gradient(circle, #000 10%, transparent 10.01%);
+  background-image: -o-radial-gradient(circle, #000 10%, transparent 10.01%);
+  background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  -webkit-transform: scale(10,10);
+      -ms-transform: scale(10,10);
+       -o-transform: scale(10,10);
+          transform: scale(10,10);
+  opacity: 0;
+  -webkit-transition: opacity 1s, -webkit-transform .5s;
+  transition: opacity 1s, -webkit-transform .5s;
+  -o-transition: opacity 1s, -o-transform .5s;
+  transition: transform .5s, opacity 1s;
+  transition: transform .5s, opacity 1s, -webkit-transform .5s, -o-transform .5s
+}
+.ripple:active:after {
+  -webkit-transform: scale(0,0);
+      -ms-transform: scale(0,0);
+       -o-transform: scale(0,0);
+          transform: scale(0,0);
+  opacity: .2;
+  -webkit-transition: 0s;
+  -o-transition: 0s;
+  transition: 0s
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyLXJlYWN0LXZpZGVvLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/

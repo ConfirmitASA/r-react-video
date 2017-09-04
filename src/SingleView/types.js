@@ -2,14 +2,9 @@
 
 export type NavBarProps = {
     /** the callback executed when the user wants to navigate off the SingleView page (hitting back or submit) */
-        returnToGrid: () => void,
-    /**
-     * the callback executed when the user wants to navigate off the SingleView page (hitting back or submit)
-     */
-    closeOnSubmit: boolean,
+    returnToGridAction: () => void,
     loadPreviousItem: () => void,
     loadNextItem: () => void,
-    returnToGridAction: () => void,
     singleViewDisablePrev: boolean,
     singleViewDisableNext: boolean,
 }
