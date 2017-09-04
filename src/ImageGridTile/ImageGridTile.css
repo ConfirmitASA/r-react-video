@@ -22,9 +22,13 @@
     cursor:pointer;
   }
   &--action-icon {
-    min-width:48px;
     padding: 8px;
+    margin-top:-8px;
+    opacity:0.53;
+    font-size:1px;
+    flex:none;
   }
+
   &--content{
     display: flex;
     flex-direction: row;

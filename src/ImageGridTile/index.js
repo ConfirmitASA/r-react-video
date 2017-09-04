@@ -25,7 +25,7 @@ class ImageGridTile extends PureComponent{
     let actionButton = null;
     const {actionIcon,onSelect,aspect,title,placeholderSizing,image,description}=this.props;
     if (this.props.actionIcon) {
-      actionButton = <div className="ImageGridTile--edit">
+      actionButton = <div className="ImageGridTile--edit ripple">
         <div className="ImageGridTile--action-icon">{actionIcon}</div>
       </div>;
     }

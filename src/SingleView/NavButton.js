@@ -8,7 +8,7 @@ export default class NavButton extends PureComponent<NavButtonProps, any> {
     render() {
         const { icon, ...wrapper } = this.props
         return (
-            <span className="SingleView--nav-button" {...wrapper}>
+            <span className="SingleView--nav-button ripple" {...wrapper}>
                 <MDIcon icon={icon} />
             </span>
         )
