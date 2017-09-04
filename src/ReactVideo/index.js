@@ -86,7 +86,11 @@ export default class ReactVideo extends Component<Props, State> {
         singleViewDisablePrev={singleViewDisablePrev}
         singleViewDisableNext={singleViewDisableNext}
       >
-        {singleViewMode === 'edit' ? <iframe className="renderArea" src={singleView.link} /> : <SingleViewResponses data={singleView} columns={this.individualRecordsQuestionIds} columnsMap={this.individualRecordsKeyLabels} />}
+        {singleViewMode === 'edit' ?
+          (<iframe className="renderArea" src={singleView.link} />)
+          :
+          (<SingleViewResponses data={singleView} columns={this.individualRecordsQuestionIds} columnsMap={this.individualRecordsKeyLabels} />)
+        }
       </SingleView>
     ) : null
   }
@@ -97,17 +101,32 @@ export default class ReactVideo extends Component<Props, State> {
   }
 
   get individualRecordsKeyLabels() {
+    return {...this.getLabelsForMainFields(), ...this.getLabelsForIndividualRecords()}
+  }
+
+  getLabelsForMainFields(){
     const config = this.DS.config();
-    const irIds = this.individualRecordsQuestionIds;
     const map = {};
-    ['title', 'description', 'image', 'audio', 'video'].reverse().forEach(key=>map[key]=this.DS.allColumns.filter(record => record.key===config[key])[0].label)
+    ['title', 'description', 'image', 'audio', 'video'].reverse().forEach(key =>
+      map[key] = this.DS.allColumns.filter(record =>
+        record.key === config[key]
+      )[0].label
+    )
+    return map;
+  } 
+
+  getLabelsForIndividualRecords(){
+    const map = {};
+    const irIds = this.individualRecordsQuestionIds;
     this.DS.allColumns.forEach(column => {
       if (irIds.indexOf(column.key) > -1) {
         map[column.key] = column.label
       }
     })
-    return map
-  }
+    return map;
+  } 
+
+
 
   dataLoadingMessage() {
     let message;

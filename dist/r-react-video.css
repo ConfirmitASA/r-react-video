@@ -126,6 +126,34 @@
   height: calc(100% - 48px);
   height: calc(100% - 48px)
 }
+.SingleView .renderArea .Responses {
+  overflow-y: scroll
+}
+.SingleView .renderArea .Responses--wrapper {
+  margin: 0 auto;
+  max-width: 60em;
+  min-width: 100%;
+  min-width: 240px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch
+}
+.SingleView .renderArea .Responses--label {
+  font: 13px rgba(0, 0, 0, .53)
+}
+.SingleView .renderArea .Responses--value {
+  font: 14px rgba(0, 0, 0, .83)
+}
 .GridContainer.GridView{
   margin: 0 auto;
 }

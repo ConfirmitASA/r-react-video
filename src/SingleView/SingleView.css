@@ -53,5 +53,26 @@
     border: 0;
     background: transparent;
     height: calc(100% - var(--SingleView-header-height, 48px));
+
+    & .Responses{
+      overflow-y: scroll;
+
+      &--wrapper{
+        margin:0 auto;
+        max-width:60em;
+        min-width:100%;
+        min-width: 240px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      &--label{
+        font: 13px rgba(0,0,0,.53)
+      }
+      &--value{
+        font: 14px rgba(0,0,0,.83)
+      }
+
+    }
   }
 }

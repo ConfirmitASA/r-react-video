@@ -1,6 +1,6 @@
 {
   "name": "r-react-video",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Reportal React component for presenting a video-board with hitlist data",
   "main": "src/main.js",
   "repository": {

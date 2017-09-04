@@ -1,6 +1,7 @@
 //@flow
 import HitlistDS from "r-hitlist-datasource";
 import unionBy from "lodash/unionBy";
+import ReportalBase from 'r-reportal-base';
 
 type Options = {
     /**
@@ -31,6 +32,7 @@ export default function DSAbstraction(options: Options) {
     const DS = new HitlistDS();
     const component = options.component;
     let config;
+    const query = ReportalBase.locationDeserialize().query;
 
     setupDataListener(options.config);
 
@@ -125,19 +127,26 @@ export default function DSAbstraction(options: Options) {
      * massage data to fit the type we expect to receive in react view
      * */
     function prepareData(data:any, type: string) {
+        console.log('prepareData',data,type)
         switch (type) {
             case 'image':
                 let result = (/src='(.+?)'/gi).exec(data);
                 return result != null && result[1] ? result[1] : undefined;
             case 'description':
-            case 'title':
+            case 'title':return !(data.indexOf('-') > -1 && data.trim().length === 1) ? data.trim() : undefined;
             case 'video':
             case 'audio':
-                return !(data.indexOf('-') > -1 && data.trim().length === 1) ? data.trim() : undefined;
+                return !(data.indexOf('-') > -1 && data.trim().length === 1) ? generateMediaLink(data.trim(), type) : undefined;
             case 'tags':
                 return data && (data.indexOf(',') > -1 ? data.split(',') : data.indexOf('-') > -1 && data.trim().length === 1 ? undefined : data.trim());
             default: return data;
         }
+    }
+
+    function generateMediaLink(fileName:string, type: 'audio'|'video'){
+        console.log('generateMediaLink',fileName,type)
+        const dsName = config.surveyID;
+        return `/reportal/Wysiwyg/Report/${query.reportid}/${dsName}/${type}/${fileName}`
     }
 
     function handleDataLoadingError(err) {
