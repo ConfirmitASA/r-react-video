@@ -4,12 +4,12 @@ export default class Responses extends PureComponent {
     render() {
         const { data, columns, columnsMap } = this.props
         const media = ['image', 'video', 'audio'];
-        const date = data.interview_start || data.interview_end;
+        const responseDate = data.interview_start || data.interview_end;
         return (
             <div className="renderArea Responses">
                 <div className="Responses--wrapper">
                     {data.title && <div className="Responses--pageTitle"> {data.title} </div>}
-                    {!!date && <div className="Responses--label"> {date} </div>}
+                    {!!responseDate && <div className="Responses--label"> {responseDate} </div>}
                     {data.description && <div className="Responses--value"> {data.description} </div>}
                     {media.map(mediaItem => {
                         return data[mediaItem] ? (

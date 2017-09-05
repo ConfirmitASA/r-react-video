@@ -13,8 +13,6 @@ export type Props =  NavBarProps & {
      * element that will be used for the single view (iframe or hitlist single view)
     */
     children: JSX.Element,
-    /** the text to be displayed next to the back button in the nav header */
-    headerText?: string,
 }
 
 export type NavButtonProps = {

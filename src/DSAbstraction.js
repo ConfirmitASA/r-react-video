@@ -72,7 +72,7 @@ export default function DSAbstraction(options: Options) {
         const newData: parsedDataRow[] = data.map((dataRow, rowIndex) => {
             let parsedRow: parsedDataRow = {};
             const ir = config.individualRecords || [];
-            const dataFields = ['id', 'title', 'description', 'image', 'audio', 'video', 'tags'].concat(ir);
+            const dataFields = ['id', 'title', 'description', 'video', 'audio','image'].concat(ir);
             dataFields.forEach(key => {
                 const columnID = config[key];
                 parsedRow[key] = prepareData(dataRow[columnID || key], key);
