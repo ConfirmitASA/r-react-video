@@ -4,6 +4,9 @@
   flex-wrap: wrap;
   flex:1;
   padding:24px 32px 0;
+  @media all AND (min-width:0) AND (max-width:1024px) {
+    -webkit-flex-basis: 100% !important;
+  }
 }
 .ImageGridContainer{
   position:absolute;
@@ -14,3 +17,4 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+
