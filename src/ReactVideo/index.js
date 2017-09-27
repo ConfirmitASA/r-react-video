@@ -65,6 +65,7 @@ export default class ReactVideo extends Component<Props, State> {
 
   renderNavigation() {
     const { loadPreviousPage, loadNextPage, loadMore, disableNextButton, disablePrevButton, getPageInfo } = this.DS;
+
     const navigationProps = {
       loadPreviousPage,
       loadNextPage,
@@ -73,7 +74,8 @@ export default class ReactVideo extends Component<Props, State> {
       disablePrevButton,
       pageInfo: getPageInfo(),
       config: this.state.config,
-      translate: this.translate
+      translate: this.translate,
+      loading:this.state.loading
     }
 
     return <Navigation {...navigationProps} />
@@ -146,6 +148,9 @@ export default class ReactVideo extends Component<Props, State> {
   }
 
   returnToGrid = () => {
+    if(this.state.singleViewMode==='edit') {
+      this.DS.initialLoad()
+    }
     this.setState({
       singleViewVisible: false,
       singleView: {

@@ -130,7 +130,7 @@ export default function DSAbstraction(options: Options) {
    * massage data to fit the type we expect to receive in react view
    * */
   function prepareData(data: any, type: string) {
-    console.log('prepareData', data, type)
+    //console.log('prepareData', data, type)
     switch (type) {
       case 'image':
         let result = (/src='(.+?)'/gi).exec(data);
@@ -149,7 +149,7 @@ export default function DSAbstraction(options: Options) {
   }
 
   function generateMediaLink(fileName: string, type: 'audio' | 'video') {
-    console.log('generateMediaLink', fileName, type);
+    //console.log('generateMediaLink', fileName, type);
     const dsName = config.surveyID;
     return `/reportal/Wysiwyg/Report/${query.reportid}/${dsName}/${type}/${fileName}`
   }
