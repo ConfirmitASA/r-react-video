@@ -1,6 +1,6 @@
 //@flow
-import type {State, Props } from './types'
-
+import type {State, Props } from './types';
+import Promise from 'core-js/library/es6/promise';
 import React, { Component } from "react";
 import ImageGrid from "../ImageGrid";
 import SingleView from "../SingleView";
@@ -18,6 +18,7 @@ export default class ReactVideo extends Component<Props, State> {
 
   state = {
     items: null,
+    loading:false,
     error: false,
     config: null,
     singleViewMode: 'view',
@@ -79,7 +80,7 @@ export default class ReactVideo extends Component<Props, State> {
   }
 
   renderSingleView() {
-    const { singleViewVisible, singleView, singleViewDisablePrev, singleViewDisableNext, singleViewMode } = this.state;
+    const { singleViewVisible, singleView, singleViewDisablePrev, singleViewDisableNext, singleViewMode, loading } = this.state;
     return singleViewVisible ? (
       <SingleView
         returnToGridAction={this.returnToGrid}
@@ -87,6 +88,7 @@ export default class ReactVideo extends Component<Props, State> {
         loadNextItem={this.loadNextItem}
         singleViewDisablePrev={singleViewDisablePrev}
         singleViewDisableNext={singleViewDisableNext}
+        loading={loading}
       >
         {singleViewMode === 'edit' ?
           (<iframe className="renderArea" src={singleView.link} />)
@@ -178,11 +180,7 @@ export default class ReactVideo extends Component<Props, State> {
     } else if (loadItemFromNextPage) {
       promisedItems = paginationType !== 'continuous' ? this.DS.loadNextPage() : this.DS.loadMore();
     }
-    /*     const itemsArePromised = !Array.isArray(items) && items.hasOwnProperty('then');
-        if (!itemsArePromised) {
-          promisedItems = Promise.resolve(items);
-        }
-     */
+
     promisedItems.then(() => {
       let singleViewData;
       this.setState(prevState => {
@@ -198,7 +196,7 @@ export default class ReactVideo extends Component<Props, State> {
         }
 
         return {
-          ...this.getSingleViewNavState(nextIndex),
+          ...this.getSingleViewNavState(newItems.indexOf(singleViewData)),
           singleView: singleViewData,
           singleViewVisible: true
         }
@@ -210,8 +208,12 @@ export default class ReactVideo extends Component<Props, State> {
     const items = this.state.items;
     let singleViewDisableNext = false,
       singleViewDisablePrev = false;
-
-    if (currentItemIndex <= 0 && this.DS.disablePrevButton) {
+    /*if new item index is 0 or less and it's the first item in dataset.
+    If hitlist pagination has disablePrevButton then button needs to be disabled.
+    But in case of continuous navigation hitlist sends disablePrevButton for the second page as false, but we know that there's no data beyond item[0], so we ignore hitlist flag.
+    */
+    console.log(currentItemIndex)
+    if (currentItemIndex <= 0 && (this.state.config.pagination==='continuous' || this.DS.disablePrevButton)) {
       singleViewDisablePrev = true;
     }
     if (currentItemIndex >= items.length - 1 && this.DS.disableNextButton) {

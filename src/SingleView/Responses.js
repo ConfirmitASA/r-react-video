@@ -2,34 +2,39 @@ import React, { PureComponent } from 'react'
 
 export default class Responses extends PureComponent {
     render() {
-        const { data, columns, columnsMap } = this.props
+        const { data, columns, columnsMap } = this.props;
         const media = ['image', 'video', 'audio'];
-        const responseDate = data.interview_start || data.interview_end;
-        return (
+        if(data){
+          const responseDate = data.interview_start || data.interview_end;
+          return (
             <div className="renderArea Responses">
-                <div className="Responses--wrapper">
-                    {data.title && <div className="Responses--pageTitle"> {data.title} </div>}
-                    {!!responseDate && <div className="Responses--label"> {responseDate} </div>}
-                    {data.description && <div className="Responses--value"> {data.description} </div>}
-                    {media.map(mediaItem => {
-                        return data[mediaItem] ? (
-                            <div className="row">
-                                <div className="Responses--label">{columnsMap[mediaItem]}</div>
-                                <div className="Responses--value">{this[`_${mediaItem}Renderer`]}</div>
-                            </div>
-                        ) : null
-                    })}
-                    {columns != null && columns.map(qID => {
-                        return data[qID] ? (
-                            <div className="row">
-                                <div className="Responses--label">{columnsMap[qID]}</div>
-                                <div className="Responses--value">{data[qID]}</div>
-                            </div>
-                        ) : null
-                    })}
-                </div>
+              <div className="Responses--wrapper">
+                {data.title && <div className="Responses--pageTitle"> {data.title} </div>}
+                {!!responseDate && <div className="Responses--label"> {responseDate} </div>}
+                {data.description && <div className="Responses--value"> {data.description} </div>}
+                {media.map(mediaItem => {
+                  return data[mediaItem] ? (
+                    <div className="row">
+                      <div className="Responses--label">{columnsMap[mediaItem]}</div>
+                      <div className="Responses--value">{this[`_${mediaItem}Renderer`]}</div>
+                    </div>
+                  ) : null
+                })}
+                {columns != null && columns.map(qID => {
+                  return data[qID] ? (
+                    <div className="row">
+                      <div className="Responses--label">{columnsMap[qID]}</div>
+                      <div className="Responses--value">{data[qID]}</div>
+                    </div>
+                  ) : null
+                })}
+              </div>
             </div>
-        )
+          )
+        } else {
+          console.log('no data for individualResponse');
+          return null
+        }
     }
 
     get _imageRenderer() {
