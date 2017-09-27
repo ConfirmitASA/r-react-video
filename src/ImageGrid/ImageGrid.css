@@ -14,3 +14,10 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+@media screen AND (max-width:1024px) {
+  .ImageGrid {
+    -webkit-flex-basis: 100% !important;
+  }
+}
+
+

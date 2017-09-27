@@ -15,7 +15,6 @@
   flex-direction:column;
   flex:1;
 
-
   &--cover,
   &--title,
   &--action-icon{
@@ -62,5 +61,10 @@
     text-overflow: ellipsis;
     white-space: normal;
     word-wrap: break-word;
+  }
+}
+@media screen AND (min-width:0px) AND (max-width:1024px) {
+  .ImageGridTile{
+    flex:1 1 33% !important;
   }
 }
