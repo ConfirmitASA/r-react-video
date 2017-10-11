@@ -29,6 +29,7 @@
     display: inline-block;
     vertical-align: inherit;
     border-radius:50%;
+    user-select:none;
 
     & > svg {
       opacity: .87;

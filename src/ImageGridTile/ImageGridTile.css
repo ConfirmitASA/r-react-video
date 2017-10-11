@@ -19,7 +19,9 @@
   &--title,
   &--action-icon{
     cursor:pointer;
+    user-select: none;
   }
+
   &--action-icon {
     padding: 8px;
     margin-top:-8px;
