@@ -65,8 +65,13 @@
     word-wrap: break-word;
   }
 }
-@media screen AND (min-width:0px) AND (max-width:1024px) {
+@media screen AND (min-width:415px) AND (max-width:1024px) {
   .ImageGridTile{
     flex:1 1 33% !important;
+  }
+}
+@media screen AND (min-width:0px) AND (max-width:414px) AND (orientation: portrait) {
+  .ImageGridTile{
+    flex:1 1 100% !important;
   }
 }
